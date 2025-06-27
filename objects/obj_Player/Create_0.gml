@@ -8,3 +8,6 @@ _max_magica = 100;
 
 // Player Characteristics
 _acceleration = 4;
+
+_invincibility = false;
+_invincibility_timer = gamespeed_fps;
