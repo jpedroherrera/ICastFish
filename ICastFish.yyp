@@ -78,6 +78,7 @@
     {"id":{"name":"obj_Wall","path":"objects/obj_Wall/obj_Wall.yy",},},
     {"id":{"name":"par_Wall","path":"objects/par_Wall/par_Wall.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"approachFunction","path":"scripts/approachFunction/approachFunction.yy",},},
     {"id":{"name":"spr_BasicCharacterActions","path":"sprites/spr_BasicCharacterActions/spr_BasicCharacterActions.yy",},},
     {"id":{"name":"spr_BasicCharacterSpriteSheet","path":"sprites/spr_BasicCharacterSpriteSheet/spr_BasicCharacterSpriteSheet.yy",},},
     {"id":{"name":"spr_BasicFurniture","path":"sprites/spr_BasicFurniture/spr_BasicFurniture.yy",},},

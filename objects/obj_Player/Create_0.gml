@@ -4,73 +4,103 @@ _max_hp = 100;
 _magica = 100;
 _max_magica = 100;
 
-// Player Characteristics
-_acceleration = 4;
+// Movement characteristics.
+move_speed = 6;
+accel = 0.7;
+fric = 0.7;
+_ladder_available = true;
+_ladder_dismount_timer = 0;
+
+// Combat characteristics.
 _invincibility = false;
 _invincibility_timer = fps;
-_ladder_available = true;
-_ladder_dismount_timer = 0; // Initialize to 0 (no delay until dismount)
+
 
 // State Machine
-var _up;
-var _left;
-var _down;
-var _right;
-var _jump;
-var _hspd;
-var _vspd;
+// Movement and state-related input flags and speed vectors.
+_up = 0;
+_left = 0;
+_down = 0;
+_right = 0;
+_jump = 0;
+_hspd = 0;
+_vspd = 0;
+_input_x = 0;
+_input_y = 0;
 
+
+// Handles generic player movement.
 stateFree = function()
 {
-    _hspd = _right - _left;
-    _vspd = _down - _up;
+	// Directional input.
+    _input_x = _right - _left;
+    _input_y = _down - _up;
 
-    if (_hspd != 0 || _vspd != 0)
+    if (_input_x != 0 || _input_y != 0)
     {
-        var _spd = 4;
-        var _dir = point_direction(0, 0, _hspd, _vspd);
-        var _xadd = lengthdir_x(_spd, _dir);
-        var _yadd = lengthdir_y(_spd, _dir);
-    
-        // Wall Collision Physics
-        if (!place_meeting(x + _xadd, y + _yadd, par_Wall))
+		// Prevent faster movement when pressing both directions.
+		var length = point_distance(0, 0, _input_x, _input_y);
+        if (length > 0)
         {
-            x += _xadd;
-            y += _yadd;
+            _input_x /= length;
+            _input_y /= length;
+        }
+
+        // Apply acceleration.
+        _hspd += _input_x * accel;
+        _vspd += _input_y * accel;
+
+        // Cap speed.
+        var spd_length = point_distance(0, 0, _hspd, _vspd);
+        if (spd_length > move_speed)
+		{
+            var factor = move_speed / spd_length;
+            _hspd *= factor;
+            _vspd *= factor;
         }
     }
-    
-    // Ladder Interaction
-    if (place_meeting(x, y, obj_Ladder) && _ladder_available && _vspd != 0)
+    else
+    {
+		// Apply friction.
+        _hspd = approach(_hspd, 0, fric);
+        _vspd = approach(_vspd, 0, fric);
+    }
+
+	// Check for wall collision before applying movement.
+    if (!place_meeting(x + _hspd, y + _vspd, par_Wall))
+    {
+        x += _hspd;
+        y += _vspd;
+    }
+
+	// Enter ladder climbing state if ladder is detected.
+    if (place_meeting(x, y, obj_Ladder) && _ladder_available && (_up || _down))
     {
         _hspd = 0;
         _vspd = 0;
         state = stateLadder;
     }
 
-    // Handle Ladder Dismount Timer
+	// Cooldown timer after dismounting a ladder.
     if (!_ladder_available)
     {
         _ladder_dismount_timer -= 1;
-        if (_ladder_dismount_timer <= 0)
-        {
-            _ladder_available = true;
-        }
+        if (_ladder_dismount_timer <= 0) _ladder_available = true;
     }
 }
 
+// Handles climbing movement on ladders.
 stateLadder = function()
 {
-    var _climb = (_down - _up) * _acceleration;
+    var climb_speed = 2;
+    var _climb = (_down - _up) * climb_speed;
     y += _climb;
 
-    if (_climb == 0)
-    {
-        _vspd *= 0.8;
-    }
-    
-    // Exit Ladder State
-    if (_jump != 0 || !place_meeting(x, y, obj_Ladder))
+	// Slightly dampen vertical speed when idle on ladder.
+    if (_climb == 0) _vspd *= 0.8;
+
+	// Dismount ladder when jumping or exiting ladder area.
+    if (_jump || !place_meeting(x, y, obj_Ladder))
     {
         _ladder_available = false;
         _ladder_dismount_timer = fps * 0.75;
