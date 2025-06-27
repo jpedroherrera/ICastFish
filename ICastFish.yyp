@@ -73,6 +73,7 @@
   },
   "name":"ICastFish",
   "resources":[
+    {"id":{"name":"obj_Ladder","path":"objects/obj_Ladder/obj_Ladder.yy",},},
     {"id":{"name":"obj_Player","path":"objects/obj_Player/obj_Player.yy",},},
     {"id":{"name":"obj_Wall","path":"objects/obj_Wall/obj_Wall.yy",},},
     {"id":{"name":"par_Wall","path":"objects/par_Wall/par_Wall.yy",},},
@@ -92,6 +93,7 @@
     {"id":{"name":"spr_EggAndNest","path":"sprites/spr_EggAndNest/spr_EggAndNest.yy",},},
     {"id":{"name":"spr_EggItem","path":"sprites/spr_EggItem/spr_EggItem.yy",},},
     {"id":{"name":"spr_GrassBiomeAssets","path":"sprites/spr_GrassBiomeAssets/spr_GrassBiomeAssets.yy",},},
+    {"id":{"name":"spr_Ladder","path":"sprites/spr_Ladder/spr_Ladder.yy",},},
     {"id":{"name":"spr_MilkAndGrass","path":"sprites/spr_MilkAndGrass/spr_MilkAndGrass.yy",},},
     {"id":{"name":"spr_Paths","path":"sprites/spr_Paths/spr_Paths.yy",},},
     {"id":{"name":"spr_Player","path":"sprites/spr_Player/spr_Player.yy",},},

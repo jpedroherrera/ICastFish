@@ -1,23 +1,9 @@
 // Player Movement
-var _up = keyboard_check(ord("W"));
-var _left = keyboard_check(ord("A"));
-var _down = keyboard_check(ord("S"));
-var _right = keyboard_check(ord("D"));
+_up = keyboard_check(ord("W"));
+_left = keyboard_check(ord("A"));
+_down = keyboard_check(ord("S"));
+_right = keyboard_check(ord("D"));
+_jump = keyboard_check(vk_space);
 
-var _hspd = _right - _left;
-var _vspd = _down - _up;
-
-if (_hspd != 0 || _vspd != 0)
-{
-    var _spd = 4;
-    var _dir = point_direction(0, 0, _hspd, _vspd);
-    var _xadd = lengthdir_x(_spd, _dir);
-    var _yadd = lengthdir_y(_spd, _dir);
-	
-	// Wall Collision Physics
-	if (!place_meeting(x + _xadd, y + _yadd, par_Wall))
-	{
-		x = x + _xadd;
-	    y = y + _yadd;
-	}
-}
+// Run State Machine
+state();
