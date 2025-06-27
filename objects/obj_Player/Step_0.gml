@@ -14,6 +14,7 @@ if (_hspd != 0 || _vspd != 0)
     var _xadd = lengthdir_x(_spd, _dir);
     var _yadd = lengthdir_y(_spd, _dir);
 	
+	// Wall Collision Physics
 	if (!place_meeting(x + _xadd, y + _yadd, par_Wall))
 	{
 		x = x + _xadd;
