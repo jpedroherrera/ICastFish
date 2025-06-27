@@ -13,6 +13,10 @@ if (_hspd != 0 || _vspd != 0)
     var _dir = point_direction(0, 0, _hspd, _vspd);
     var _xadd = lengthdir_x(_spd, _dir);
     var _yadd = lengthdir_y(_spd, _dir);
-    x = x + _xadd;
-    y = y + _yadd;
+	
+	if (!place_meeting(x + _xadd, y + _yadd, par_Wall))
+	{
+		x = x + _xadd;
+	    y = y + _yadd;
+	}
 }
