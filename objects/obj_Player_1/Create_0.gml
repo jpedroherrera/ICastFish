@@ -85,24 +85,25 @@ stateFree = function()
     }
 	
 	//Set Idle Anims
-	if (face == RIGHT) && (_hspd == 0) sprite_index = spr_PlayerRightIdle;
-	if (face == LEFT) && (_hspd == 0) sprite_index = spr_PlayerLeftIdle;
-	if (face == UP) && (_vspd == 0) sprite_index = spr_PlayerUpIdle;
-	if (face == DOWN) && (_vspd == 0) sprite_index = spr_PlayerDownIdle;
+	if (_right) && (_hspd == 0) sprite_index = spr_PlayerRightIdle;
+	if (_left) && (_hspd == 0) sprite_index = spr_PlayerLeftIdle;
+	if (_up) && (_vspd == 0) sprite_index = spr_PlayerUpIdle;
+	if (_down) && (_vspd == 0) sprite_index = spr_PlayerDownIdle;
+	
 	//if (face == DIAGRU) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagRUIdle;
 	//if (face == DIAGRD) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagRDIdle;
 	//if (face == DIAGLU) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagLUIdle;
 	//if (face == DIAGLD) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagLDIdle;
 	
 	//Set Sprite
-	if (_hspd > 0) face = RIGHT; //These 4 lines call for Cardinal Movement
-	if (_hspd < 0) face = LEFT;
-	if (_vspd > 0) face = DOWN;
-	if (_vspd < 0) face = UP;
-	if (_hspd > 0) && (_vspd < 0) face = DIAGRU; //These 4 lines call for the Diagonal Movement
-	if (_hspd > 0) && (_vspd > 0) face = DIAGRD;
-	if (_hspd < 0) && (_vspd > 0) face = DIAGLU;
-	if (_hspd < 0) && (_vspd < 0) face = DIAGLD;
+	if (_right) face = RIGHT; //These 4 lines call for Cardinal Movement
+	if (_left) face = LEFT;
+	if (_down) face = DOWN;
+	if (_up) face = UP;
+	if (_right) && (_up) face = DIAGRU; //These 4 lines call for the Diagonal Movement
+	if (_right) && (_down) face = DIAGRD;
+	if (_left) && (_up) face = DIAGLD;
+	if (_left) && (_down) face = DIAGLU;
 	
 	
 	sprite_index = sprite[face];
