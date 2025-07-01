@@ -43,7 +43,6 @@
   "name":"ICastFish",
   "resources":[
     {"id":{"name":"obj_Ladder","path":"objects/obj_Ladder/obj_Ladder.yy",},},
-    {"id":{"name":"obj_Player_1","path":"objects/obj_Player_1/obj_Player_1.yy",},},
     {"id":{"name":"obj_Player","path":"objects/obj_Player/obj_Player.yy",},},
     {"id":{"name":"obj_Wall","path":"objects/obj_Wall/obj_Wall.yy",},},
     {"id":{"name":"par_Wall","path":"objects/par_Wall/par_Wall.yy",},},
