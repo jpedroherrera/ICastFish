@@ -15,7 +15,15 @@ _ladder_dismount_timer = 0;
 _invincibility = false;
 _invincibility_timer = fps;
 
-//Facing Direction Array __ Called from a Macros Script -.C
+
+// Approach Function
+approach = function(val, target, amount)
+{
+    return (val < target) ? min(val + amount, target) : max(val - amount, target);
+}
+
+
+// Facing Direction Array -- refer to Macros Script
 sprite[RIGHT] = spr_PlayerRightWalk;
 sprite[UP] = spr_PlayerUpWalk;
 sprite[LEFT] = spr_PlayerLeftWalk;
@@ -24,6 +32,14 @@ sprite[DIAGLD] = spr_PlayerDiagLDWalk;
 sprite[DIAGLU] = spr_PlayerDiagLUWalk;
 sprite[DIAGRD] = spr_PlayerDiagRDWalk;
 sprite[DIAGRU] = spr_PlayerDiagRUWalk;
+sprite[RIGHT + 8] = spr_PlayerRightIdle;  // Offset by 8 to store idle sprites
+sprite[UP + 8] = spr_PlayerUpIdle;
+sprite[LEFT + 8] = spr_PlayerLeftIdle;
+sprite[DOWN + 8] = spr_PlayerDownIdle;
+sprite[DIAGLD + 8] = spr_PlayerDiagLDIdle;
+sprite[DIAGLU + 8] = spr_PlayerDiagLUIdle;
+sprite[DIAGRD + 8] = spr_PlayerDiagRDIdle;
+sprite[DIAGRU + 8] = spr_PlayerDiagRUIdle;
 
 face = DOWN;
 
@@ -84,28 +100,49 @@ stateFree = function()
         y += _vspd;
     }
 	
-	//Set Idle Anims
-	if (face == RIGHT) && (_hspd == 0) sprite_index = spr_PlayerRightIdle;
-	if (face == LEFT) && (_hspd == 0) sprite_index = spr_PlayerLeftIdle;
-	if (face == UP) && (_vspd == 0) sprite_index = spr_PlayerUpIdle;
-	if (face == DOWN) && (_vspd == 0) sprite_index = spr_PlayerDownIdle;
-	//if (face == DIAGRU) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagRUIdle;
-	//if (face == DIAGRD) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagRDIdle;
-	//if (face == DIAGLU) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagLUIdle;
-	//if (face == DIAGLD) && (_vspd == 0 && _hspd == 0) sprite_index = spr_PlayerDiagLDIdle;
-	
 	//Set Sprite
-	if (_hspd > 0) face = RIGHT; //These 4 lines call for Cardinal Movement
-	if (_hspd < 0) face = LEFT;
-	if (_vspd > 0) face = DOWN;
-	if (_vspd < 0) face = UP;
-	if (_hspd > 0) && (_vspd < 0) face = DIAGRU; //These 4 lines call for the Diagonal Movement
-	if (_hspd > 0) && (_vspd > 0) face = DIAGRD;
-	if (_hspd < 0) && (_vspd > 0) face = DIAGLU;
-	if (_hspd < 0) && (_vspd < 0) face = DIAGLD;
-	
-	
-	sprite_index = sprite[face];
+    if (_hspd != 0 || _vspd != 0) {
+        var move_dir = point_direction(0, 0, _hspd, _vspd);
+        // Round to nearest 45° for 8-directional movement
+        move_dir = round(move_dir / 45) * 45;
+        
+        switch (move_dir)
+        {
+            case 0:   // Right
+                face = RIGHT;
+                break;
+            case 45:  // Right + Up
+                face = DIAGRU;
+                break;
+            case 90:  // Up
+                face = UP;
+                break;
+            case 135: // Left + Up
+                face = DIAGLU;
+                break;
+            case 180: // Left
+                face = LEFT;
+                break;
+            case 225: // Left + Down
+                face = DIAGLD;
+                break;
+            case 270: // Down
+                face = DOWN;
+                break;
+            case 315: // Right + Down
+                face = DIAGRD;
+                break;
+        }
+
+        sprite_index = sprite[face];
+        show_debug_message("Setting walking sprite: " + sprite_get_name(sprite_index));
+    }
+    else
+    {
+        // Not moving: Use idle sprites
+        sprite_index = sprite[face + 8]; // Set idle sprite (offset by 8)
+        show_debug_message("Setting idle sprite: " + sprite_get_name(sprite_index));
+    }
 
 	// Enter ladder climbing state if ladder is detected.
     if (place_meeting(x, y, obj_Ladder) && _ladder_available && (_up || _down))
