@@ -28,8 +28,8 @@ sprite[RIGHT] = spr_PlayerRightWalk;
 sprite[UP] = spr_PlayerUpWalk;
 sprite[LEFT] = spr_PlayerLeftWalk;
 sprite[DOWN] = spr_PlayerDownWalk;
-sprite[DIAGLD] = spr_PlayerDiagLUWalk;
-sprite[DIAGLU] = spr_PlayerDiagLDWalk;
+sprite[DIAGLD] = spr_PlayerDiagLDWalk;
+sprite[DIAGLU] = spr_PlayerDiagLUWalk;
 sprite[DIAGRD] = spr_PlayerDiagRDWalk;
 sprite[DIAGRU] = spr_PlayerDiagRUWalk;
 sprite[RIGHT + 8] = spr_PlayerRightIdle;  // Offset by 8 to store idle sprites
@@ -101,8 +101,8 @@ stateFree = function()
     }
 	
 	//Set Sprite
-    if (_hspd != 0 || _vspd != 0) {
-        var move_dir = point_direction(0, 0, _hspd, _vspd);
+    if (_input_x != 0 || _input_y != 0) {
+        var move_dir = point_direction(0, 0, _input_x, _input_y);
         // Round to nearest 45° for 8-directional movement
         move_dir = round(move_dir / 45) * 45;
         
