@@ -1,4 +1,4 @@
-// Get inputs
+// Get inputs.
 up_key = keyboard_check_pressed(ord("W"));
 down_key = keyboard_check_pressed(ord("S"));
 confirm_key = keyboard_check_pressed(vk_enter);
@@ -57,7 +57,7 @@ if (confirm_key)
 			break;
 	}
 	
-	// Starts 'selector' at the top of the options list of the menu the user changed to.
+	// Starts cursor at the top of the options list of the menu the user changed to.
 	if (start_menu_level != menu_level) position = 0;
 	
 	// Correct option length.

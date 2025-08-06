@@ -17,6 +17,7 @@ SETTINGS = 1;
 
 menu_level = GENERAL;
 
+// Menus.
 // General menu options.
 option[GENERAL, 0] = "Start Game";
 option[GENERAL, 1] = "Settings";
