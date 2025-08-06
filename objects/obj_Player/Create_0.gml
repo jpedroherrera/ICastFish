@@ -50,6 +50,7 @@ _left = 0;
 _down = 0;
 _right = 0;
 _jump = 0;
+menu_key = 0;
 _hspd = 0;
 _vspd = 0;
 _input_x = 0;
