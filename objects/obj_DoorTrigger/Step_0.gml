@@ -1,6 +1,4 @@
-//Spawns an interactive prompt when player collision, but only does it one time 
-//in order to save on resources
-
+//Spawns an interactive prompt when player collision, but only does it one time in order to save on resources.
 if place_meeting(x, y, obj_Player) && instance_stop = 1
 {
 	instance_stop = 0;

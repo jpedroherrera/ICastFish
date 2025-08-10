@@ -75,6 +75,7 @@
     {"id":{"name":"obj_Wall","path":"objects/obj_Wall/obj_Wall.yy",},},
     {"id":{"name":"par_Wall","path":"objects/par_Wall/par_Wall.yy",},},
     {"id":{"name":"rm_GeneralRoom","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},},
+    {"id":{"name":"rm_HouseInterior","path":"rooms/rm_HouseInterior/rm_HouseInterior.yy",},},
     {"id":{"name":"rm_TitleScreen","path":"rooms/rm_TitleScreen/rm_TitleScreen.yy",},},
     {"id":{"name":"DepthSorting","path":"scripts/DepthSorting/DepthSorting.yy",},},
     {"id":{"name":"macros","path":"scripts/macros/macros.yy",},},
@@ -120,6 +121,7 @@
   "RoomOrderNodes":[
     {"roomId":{"name":"rm_TitleScreen","path":"rooms/rm_TitleScreen/rm_TitleScreen.yy",},},
     {"roomId":{"name":"rm_GeneralRoom","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},},
+    {"roomId":{"name":"rm_HouseInterior","path":"rooms/rm_HouseInterior/rm_HouseInterior.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
