@@ -1,4 +1,4 @@
-visible = true;        // Hide menu initially.
+visible = true;        // Show menu initially.
 active = true;         // Custom flag to ignore input/drawing if inactive.
 
 	// Declaring necessary variables.
@@ -70,6 +70,26 @@ function MenuHeightAndWidth()
 }
 
 
+// Function to toggle menu visibility and state.
+function toggleMenu(is_on) {
+    active = is_on;
+    visible = is_on;
+    position = 0;
+    menu_level = GENERAL;
+    option_length = array_length(option[menu_level]);
+    
+    // Set the state function for drawing and input based on context:
+    if (is_on) {
+        state = stateInGame;
+        // Reset last_confirm_time to prevent immediate input.
+        last_confirm_time = current_time;
+    } else {
+        state = stateTitleScreen;
+    }
+}
+
+
+// Title screen state.
 stateTitleScreen = function()
 {
 	MenuHeightAndWidth();
@@ -92,6 +112,8 @@ stateTitleScreen = function()
 	}
 }
 
+
+// In-game state.
 stateInGame = function ()
 {
 	MenuHeightAndWidth();
@@ -130,22 +152,3 @@ stateInGame = function ()
 }
 
 state = stateTitleScreen;
-
-
-// Function to toggle menu visibility and state.
-function toggleMenu(isOn) {
-    active = isOn;
-    visible = isOn;
-    position = 0;
-    menu_level = GENERAL;
-    option_length = array_length(option[menu_level]);
-    
-    // Set the state function for drawing and input based on context:
-    if (isOn) {
-        state = stateInGame;
-        // Reset last_confirm_time to prevent immediate input.
-        last_confirm_time = current_time;
-    } else {
-        state = stateTitleScreen;
-    }
-}

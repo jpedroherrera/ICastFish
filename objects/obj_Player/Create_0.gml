@@ -160,6 +160,17 @@ stateFree = function()
         if (ladder_dismount_timer <= 0) ladder_available = true;
     }
 
+	// Check for door interaction.
+	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_GeneralRoom
+	{
+		room_goto(rm_HouseInterior)
+	}
+
+	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_HouseInterior
+	{
+		room_goto(rm_GeneralRoom);	
+	}
+
 	// Check for menu toggle
     if (keyboard_check_pressed(vk_escape))
     {
