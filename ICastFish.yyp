@@ -76,6 +76,7 @@
     {"id":{"name":"par_Wall","path":"objects/par_Wall/par_Wall.yy",},},
     {"id":{"name":"rm_GeneralRoom","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},},
     {"id":{"name":"rm_TitleScreen","path":"rooms/rm_TitleScreen/rm_TitleScreen.yy",},},
+    {"id":{"name":"DepthSorting","path":"scripts/DepthSorting/DepthSorting.yy",},},
     {"id":{"name":"macros","path":"scripts/macros/macros.yy",},},
     {"id":{"name":"Characters_sprites_7","path":"sprites/Characters_sprites_7/Characters_sprites_7.yy",},},
     {"id":{"name":"spr_DoorTrigger","path":"sprites/spr_DoorTrigger/spr_DoorTrigger.yy",},},

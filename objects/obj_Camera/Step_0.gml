@@ -6,29 +6,32 @@ if target.face = LEFT || DIAGLD || DIAGLU {dir = 1}
 
 // === Zoom Control ===
 //Zoom fix for weird startup zoom level being outside of zoom bounds (hopefully, not working yet)
-if zoom_fix = 1
-{
-	zoom = zoom_init
-}	
 
-if mouse_wheel_down() || mouse_wheel_up()
+if (obj_Player.state != obj_Player.stateMenu)
 {
-	zoom_fix = 0	
-}
+	if zoom_fix = 1
+	{
+		zoom = zoom_init
+	}	
 
-if zoom_fix = 0
-{
-if (mouse_wheel_up()) 
-{
-    zoom_target = clamp(zoom_target + 0.1, 1.5, 2);
-}
-if (mouse_wheel_down()) 
-{
-    zoom_target = clamp(zoom_target - 0.1, 1.5, 2);
-}
-zoom = lerp(zoom, zoom_target, zoom_speed);
-}
+	if mouse_wheel_down() || mouse_wheel_up()
+	{
+		zoom_fix = 0	
+	}
 
+	if zoom_fix = 0
+	{
+	if (mouse_wheel_up()) 
+	{
+	    zoom_target = clamp(zoom_target + 0.1, 1.5, 2);
+	}
+	if (mouse_wheel_down()) 
+	{
+	    zoom_target = clamp(zoom_target - 0.1, 1.5, 2);
+	}
+	zoom = lerp(zoom, zoom_target, zoom_speed);
+	}
+}
 
 // === Calculate Current View Size Based on Zoom ===
 if zoom_fix = 1

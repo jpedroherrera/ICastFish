@@ -1,13 +1,9 @@
-// Player Movement
-_up = keyboard_check(ord("W"));
-_left = keyboard_check(ord("A"));
-_down = keyboard_check(ord("S"));
-_right = keyboard_check(ord("D"));
-_jump = keyboard_check(vk_space);
-menu_key = keyboard_check(vk_escape);
+// Player Movement inputs
+up = keyboard_check(ord("W"));
+left = keyboard_check(ord("A"));
+down = keyboard_check(ord("S"));
+right = keyboard_check(ord("D"));
+jump = keyboard_check(vk_space);
 
-// Run State Machine
+// Run current state (free movement, ladder, or menu).
 state();
-
-// Open Menu
-if (menu_key) instance_create_depth(x, y, -100, obj_Menu);

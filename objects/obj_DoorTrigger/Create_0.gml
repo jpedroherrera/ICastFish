@@ -1,1 +1,1 @@
-inst_stop = 1;
+instance_stop = 1;

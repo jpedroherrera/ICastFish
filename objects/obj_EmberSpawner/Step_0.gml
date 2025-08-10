@@ -13,8 +13,4 @@ if (ember_timer >= ember_interval)
 }
 
 //Depth Sort with Player
-if obj_Player.y > id.bbox_bottom - 10
-{
-	depth = obj_Player.depth + 1;
-}
-else {depth = obj_Player.depth - 1;}
+DepthSorting("ember spawner");

@@ -1,29 +1,29 @@
-// Player Attributes
-_hp = 100;
-_max_hp = 100;
-_magica = 100;
-_max_magica = 100;
+// Player Attributes.
+hp = 100;
+max_hp = 100;
+magica = 100;
+max_magica = 100;
 
 // Movement characteristics.
 move_speed = 1.5;
-accel = 0.7;
+acceleration = 0.7;
 fric = 0.7;
-_ladder_available = true;
-_ladder_dismount_timer = 0;
+ladder_available = true;
+ladder_dismount_timer = 0;
 
 // Combat characteristics.
-_invincibility = false;
-_invincibility_timer = fps;
+invincibility = false;
+invincibility_timer = fps;
 
 
-// Approach Function
+// Finds vallue between two numbers, approaching the target value at a specified amount.
 approach = function(val, target, amount)
 {
     return (val < target) ? min(val + amount, target) : max(val - amount, target);
 }
 
 
-// Facing Direction Array -- refer to Macros Script
+// Facing Direction Array -- refer to Macros Script.
 sprite[RIGHT] = spr_PlayerRightWalk;
 sprite[UP] = spr_PlayerUpWalk;
 sprite[LEFT] = spr_PlayerLeftWalk;
@@ -32,7 +32,7 @@ sprite[DIAGLD] = spr_PlayerDiagLDWalk;
 sprite[DIAGLU] = spr_PlayerDiagLUWalk;
 sprite[DIAGRD] = spr_PlayerDiagRDWalk;
 sprite[DIAGRU] = spr_PlayerDiagRUWalk;
-sprite[RIGHT + 8] = spr_PlayerRightIdle;  // Offset by 8 to store idle sprites
+sprite[RIGHT + 8] = spr_PlayerRightIdle;  // Offset by 8 to store idle sprites.
 sprite[UP + 8] = spr_PlayerUpIdle;
 sprite[LEFT + 8] = spr_PlayerLeftIdle;
 sprite[DOWN + 8] = spr_PlayerDownIdle;
@@ -43,67 +43,67 @@ sprite[DIAGRU + 8] = spr_PlayerDiagRUIdle;
 
 face = DOWN;
 
-// State Machine
+    // State Machine
 // Movement and state-related input flags and speed vectors.
-_up = 0;
-_left = 0;
-_down = 0;
-_right = 0;
-_jump = 0;
+up = 0;
+left = 0;
+down = 0;
+right = 0;
+jump = 0;
 menu_key = 0;
-_hspd = 0;
-_vspd = 0;
-_input_x = 0;
-_input_y = 0;
+horizontal_speed = 0;
+vertical_speed = 0;
+input_x = 0;
+input_y = 0;
 
 
 // Handles generic player movement.
 stateFree = function()
 {
 	// Directional input.
-    _input_x = _right - _left;
-    _input_y = _down - _up;
+    input_x = right - left;
+    input_y = down - up;
 
-    if (_input_x != 0 || _input_y != 0)
+    if (input_x != 0 || input_y != 0)
     {
 		// Prevent faster movement when pressing both directions.
-		var length = point_distance(0, 0, _input_x, _input_y);
+		var length = point_distance(0, 0, input_x, input_y);
         if (length > 0)
         {
-            _input_x /= length;
-            _input_y /= length;
+            input_x /= length;
+            input_y /= length;
         }
 
         // Apply acceleration.
-        _hspd += _input_x * accel;
-        _vspd += _input_y * accel;
+        horizontal_speed += input_x * acceleration;
+        vertical_speed += input_y * acceleration;
 
         // Cap speed.
-        var spd_length = point_distance(0, 0, _hspd, _vspd);
-        if (spd_length > move_speed)
+        var speed_length = point_distance(0, 0, horizontal_speed, vertical_speed);
+        if (speed_length > move_speed)
 		{
-            var factor = move_speed / spd_length;
-            _hspd *= factor;
-            _vspd *= factor;
+            var factor = move_speed / speed_length;
+            horizontal_speed *= factor;
+            vertical_speed *= factor;
         }
     }
     else
     {
 		// Apply friction.
-        _hspd = approach(_hspd, 0, fric);
-        _vspd = approach(_vspd, 0, fric);
+        horizontal_speed = approach(horizontal_speed, 0, fric);
+        vertical_speed = approach(vertical_speed, 0, fric);
     }
 
 	// Check for wall collision before applying movement.
-    if (!place_meeting(x + _hspd, y + _vspd, par_Wall))
+    if (!place_meeting(x + horizontal_speed, y + vertical_speed, par_Wall))
     {
-	    x += _hspd;
-        y += _vspd;
+	    x += horizontal_speed;
+        y += vertical_speed;
     }
 	
 	//Set Sprite
-    if (_input_x != 0 || _input_y != 0) {
-        var move_dir = point_direction(0, 0, _input_x, _input_y);
+    if (input_x != 0 || input_y != 0) {
+        var move_dir = point_direction(0, 0, input_x, input_y);
         // Round to nearest 45° for 8-directional movement
         move_dir = round(move_dir / 45) * 45;
         
@@ -146,18 +146,34 @@ stateFree = function()
     }
 
 	// Enter ladder climbing state if ladder is detected.
-    if (place_meeting(x, y, obj_Ladder) && _ladder_available && (_up || _down))
+    if (place_meeting(x, y, obj_Ladder) && ladder_available && (up || down))
     {
-        _hspd = 0;
-        _vspd = 0;
+        horizontal_speed = 0;
+        vertical_speed = 0;
         state = stateLadder;
     }
 
 	// Cooldown timer after dismounting a ladder.
-    if (!_ladder_available)
+    if (!ladder_available)
     {
-        _ladder_dismount_timer -= 1;
-        if (_ladder_dismount_timer <= 0) _ladder_available = true;
+        ladder_dismount_timer -= 1;
+        if (ladder_dismount_timer <= 0) ladder_available = true;
+    }
+
+	// Check for menu toggle
+    if (keyboard_check_pressed(vk_escape))
+    {
+		var menu_inst = instance_find(obj_Menu, 0);
+
+		if (menu_inst == noone)
+		{
+			// Create menu instance if none exists
+			menu_inst = instance_create_depth(x, y, -100, obj_Menu);
+		}
+
+		menu_inst.visible = true;
+		state = stateMenu;
+		return; // Skip movement this frame
     }
 }
 
@@ -166,24 +182,46 @@ stateLadder = function()
 {
 	sprite_index = spr_PlayerUpWalk;
     var climb_speed = 2;
-    var _climb = (_down - _up) * climb_speed;
+    var _climb = (down - up) * climb_speed;
     y += _climb;
 
 	// Slightly dampen vertical speed when idle on ladder.
     if (_climb == 0) 
 	{
-		_vspd *= 0.8;
+		vertical_speed *= 0.8;
 		sprite_index = spr_PlayerUpIdle;
 	}
 	
 	// Dismount ladder when jumping or exiting ladder area.
-    if (_jump || !place_meeting(x, y, obj_Ladder))
+    if (jump || !place_meeting(x, y, obj_Ladder))
     {
-        _ladder_available = false;
-        _ladder_dismount_timer = fps * 0.75;
-        _vspd = 0;
+        ladder_available = false;
+        ladder_dismount_timer = fps * 0.75;
+        vertical_speed = 0;
         state = stateFree;
     }
 }
+
+stateMenu = function()
+{
+    horizontal_speed = 0;
+    vertical_speed = 0;
+
+    obj_Camera.zoom = lerp(obj_Camera.zoom, 2, 0.1);
+	
+	// Close menu on Escape key press
+    if (keyboard_check_pressed(vk_escape))
+    {
+        var menu_inst = instance_find(obj_Menu, 0);
+        if (menu_inst != noone)
+        {
+            menu_inst.visible = false;
+        }
+
+        state = stateFree;
+        return;
+    }
+}
+
 
 state = stateFree;

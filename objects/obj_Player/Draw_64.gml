@@ -1,5 +1,5 @@
 // Healthbar
-var percentage_hp = ((_max_hp/_hp)*100);
+var percentage_hp = ((max_hp/hp)*100);
 
 draw_healthbar(
 	10,				// x1
@@ -16,7 +16,7 @@ draw_healthbar(
 );
 
 // Magica Bar
-var percentage_magica = ((_max_magica/_magica)*100);
+var percentage_magica = ((max_magica/magica)*100);
 
 draw_healthbar(
 	10,					// x1
