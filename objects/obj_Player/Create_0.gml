@@ -5,7 +5,7 @@ _magica = 100;
 _max_magica = 100;
 
 // Movement characteristics.
-move_speed = 6;
+move_speed = 1.5;
 accel = 0.7;
 fric = 0.7;
 _ladder_available = true;
@@ -97,7 +97,7 @@ stateFree = function()
 	// Check for wall collision before applying movement.
     if (!place_meeting(x + _hspd, y + _vspd, par_Wall))
     {
-        x += _hspd;
+	    x += _hspd;
         y += _vspd;
     }
 	

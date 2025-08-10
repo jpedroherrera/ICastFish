@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_Ember",
-    "path":"sprites/spr_Ember/spr_Ember.yy",
+    "name":"spr_LightCutoutSmall",
+    "path":"sprites/spr_LightCutoutSmall/spr_LightCutoutSmall.yy",
   },
   "spriteMaskId":null,
   "visible":true,
