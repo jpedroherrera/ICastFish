@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"obj_LightingCutout",
+  "%Name":"obj_SmallLight",
   "eventList":[],
   "managed":true,
-  "name":"obj_LightingCutout",
+  "name":"obj_SmallLight",
   "overriddenProperties":[],
   "parent":{
     "name":"Lighting",
@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_LightCutout",
-    "path":"sprites/spr_LightCutout/spr_LightCutout.yy",
+    "name":"spr_SmallLight",
+    "path":"sprites/spr_SmallLight/spr_SmallLight.yy",
   },
   "spriteMaskId":null,
   "visible":false,

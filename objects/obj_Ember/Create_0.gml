@@ -1,6 +1,7 @@
 // Necessary variables.
 horizontal_movement = random_range(-1, 1);
 vertical_movement = random_range(-1, -3);
+ember_wobble = 0.05;
 
 _gravity = random_range(0.05, 0.08);
 fade_speed = random_range(0.01, 0.02);

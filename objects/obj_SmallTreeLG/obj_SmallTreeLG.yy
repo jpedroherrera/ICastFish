@@ -1,17 +1,18 @@
 {
   "$GMObject":"",
   "%Name":"obj_SmallTreeLG",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"obj_SmallTreeLG",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Trees",
+    "path":"folders/Objects/Trees.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"par_Tree",
+    "path":"objects/par_Tree/par_Tree.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Particles",
-    "path":"folders/Objects/Particles.yy",
+    "path":"folders/Objects/Lighting/Particles.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_LightCutoutSmall",
-    "path":"sprites/spr_LightCutoutSmall/spr_LightCutoutSmall.yy",
+    "name":"spr_SmallLight",
+    "path":"sprites/spr_SmallLight/spr_SmallLight.yy",
   },
   "spriteMaskId":null,
   "visible":true,

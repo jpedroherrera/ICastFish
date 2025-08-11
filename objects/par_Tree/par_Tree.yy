@@ -1,9 +1,11 @@
 {
   "$GMObject":"",
-  "%Name":"par_Wall",
-  "eventList":[],
+  "%Name":"par_Tree",
+  "eventList":[
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+  ],
   "managed":true,
-  "name":"par_Wall",
+  "name":"par_Tree",
   "overriddenProperties":[],
   "parent":{
     "name":"Parent Objects",
