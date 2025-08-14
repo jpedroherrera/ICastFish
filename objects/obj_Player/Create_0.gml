@@ -101,9 +101,13 @@ stateFree = function()
         y += vertical_speed;
     }
 	
-	//Set Sprite
+	//Set Sprite for when the player is holding a weapon 
+	//This sets the player sprite to always face the reticle, which is better for combat
+	
+	//When a player is no longer holding an item, to set animation back to WASD, replace x and y with 0, 0, input_x, input_y)
+	//Can also delete redundant switch case for animation based on WASD.
     if (input_x != 0 || input_y != 0) {
-        var move_dir = point_direction(0, 0, input_x, input_y);
+        var move_dir = point_direction(x, y, mouse_x, mouse_y);
         // Round to nearest 45° for 8-directional movement
         move_dir = round(move_dir / 45) * 45;
         
@@ -141,8 +145,41 @@ stateFree = function()
     else
     {
         // Not moving: Use idle sprites
+		if input_x == 0 && input_y == 0
+		{
+			var move_dir = point_direction(x, y, mouse_x, mouse_y);
+			 move_dir = round(move_dir / 45) * 45;
+			 
+			 switch(move_dir)
+			 {
+				case 0:   // Right
+                face = RIGHT;
+                break;
+            case 45:  // Right + Up
+                face = DIAGRU;
+                break;
+            case 90:  // Up
+                face = UP;
+                break;
+            case 135: // Left + Up
+                face = DIAGLU;
+                break;
+            case 180: // Left
+                face = LEFT;
+                break;
+            case 225: // Left + Down
+                face = DIAGLD;
+                break;
+            case 270: // Down
+                face = DOWN;
+                break;
+            case 315: // Right + Down
+                face = DIAGRD;
+                break;	
+			 }
         sprite_index = sprite[face + 8]; // Set idle sprite (offset by 8)
         show_debug_message("Setting idle sprite: " + sprite_get_name(sprite_index));
+		}
     }
 
 	// Enter ladder climbing state if ladder is detected.
