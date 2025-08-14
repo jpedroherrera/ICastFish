@@ -6,8 +6,8 @@
   "name":"obj_Ladder",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Room Interactables",
+    "path":"folders/Objects/Room Interactables.yy",
   },
   "parentObjectId":null,
   "persistent":false,

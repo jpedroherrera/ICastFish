@@ -6,8 +6,8 @@
   "name":"obj_Wall",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Room Interactables",
+    "path":"folders/Objects/Room Interactables.yy",
   },
   "parentObjectId":{
     "name":"par_Wall",

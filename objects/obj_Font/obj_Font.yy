@@ -9,8 +9,8 @@
   "name":"obj_Font",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"General Game Objects",
+    "path":"folders/Objects/General Game Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

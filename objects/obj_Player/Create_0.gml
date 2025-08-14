@@ -15,6 +15,9 @@ ladder_dismount_timer = 0;
 invincibility = false;
 invincibility_timer = fps;
 
+// Inventory.
+inventory = ds_map_create();
+
 
 // Finds vallue between two numbers, approaching the target value at a specified amount.
 approach = function(val, target, amount)
@@ -136,13 +139,11 @@ stateFree = function()
         }
 
         sprite_index = sprite[face];
-        show_debug_message("Setting walking sprite: " + sprite_get_name(sprite_index));
     }
     else
     {
         // Not moving: Use idle sprites
         sprite_index = sprite[face + 8]; // Set idle sprite (offset by 8)
-        show_debug_message("Setting idle sprite: " + sprite_get_name(sprite_index));
     }
 
 	// Enter ladder climbing state if ladder is detected.
@@ -174,15 +175,6 @@ stateFree = function()
 	// Check for menu toggle
     if (keyboard_check_pressed(vk_escape))
     {
-		var menu_inst = instance_find(obj_Menu, 0);
-
-		if (menu_inst == noone)
-		{
-			// Create menu instance if none exists
-			menu_inst = instance_create_depth(x, y, -100, obj_Menu);
-		}
-
-		menu_inst.visible = true;
 		state = stateMenu;
 		return; // Skip movement this frame
     }
@@ -215,19 +207,31 @@ stateLadder = function()
 
 stateMenu = function()
 {
+	var menu_inst = instance_find(obj_Menu, 0);
+
+	if (menu_inst == noone)
+	{
+		// Create menu instance if none exists
+		menu_inst = instance_create_depth(x, y, -100, obj_Menu);
+	}
+
+	menu_inst.active = true;
+	menu_inst.state = menu_inst.stateInGame; // Set to in-game state
+
     horizontal_speed = 0;
     vertical_speed = 0;
 
     obj_Camera.zoom = lerp(obj_Camera.zoom, 2, 0.1);
 	
 	// Close menu on Escape key press
-    if (keyboard_check_pressed(vk_escape))
+    if (keyboard_check_pressed(vk_escape) || obj_Menu.continue_game == true)
     {
-        var menu_inst = instance_find(obj_Menu, 0);
         if (menu_inst != noone)
         {
-            menu_inst.visible = false;
+            menu_inst.active = false;
         }
+
+		obj_Menu.continue_game = false;
 
         state = stateFree;
         return;

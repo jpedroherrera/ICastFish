@@ -1,5 +1,6 @@
 // Initialize variables
 active = true;			// Custom flag to ignore input/drawing if inactive.
+continue_game = false;
 
 // Menu size variables.
 width = 64;
@@ -38,15 +39,15 @@ menu_level = GENERAL;
 // Menu structure (array of [text, function] pairs).
 menu = [
     [ // GENERAL menu.
-        ["Start Game", startGame],
-        ["Settings", openSettings],
-        ["Quit Game", quitGame]
+        ["Start Game", StartGame],
+        ["Settings", OpenSettings],
+        ["Quit Game", QuitGame]
     ],
     [ // SETTINGS menu.
-        ["Window Size", adjustWindowSize],
-        ["Brightness", adjustBrightness],
-        ["Controls", changeControls],
-        ["Back", goBackToGeneral]
+        ["Window Size", AdjustWindowSize],
+        ["Brightness", AdjustBrightness],
+        ["Controls", ChangeControls],
+        ["Back", GoBackToGeneral]
     ]
 ];
 
@@ -55,7 +56,8 @@ option_length = array_length(menu[menu_level]);
 
 
 // Function to select a menu option.
-function selectOption(_level, _index) {
+function selectOption(_level, _index)
+{
     var func = menu[_level][_index][1]; // Get function reference.
     if (is_method(func) || is_callable(func)) {
         func(); // Call the function.
@@ -64,21 +66,23 @@ function selectOption(_level, _index) {
 
 
 // General menu option functions.
-function startGame() {room_goto(rm_GeneralRoom);}
+function StartGame() {room_goto(rm_GeneralRoom);}
 
-function openSettings() {menu_level = SETTINGS;}
+function ContinueGame() {continue_game = true;}
 
-function quitGame() {game_end();}
+function OpenSettings() {menu_level = SETTINGS;}
+
+function QuitGame() {game_end();}
 
 
 // Settings menu option functions.
-function adjustWindowSize() {show_message("Adjusting window size...");}
+function AdjustWindowSize() {show_message("Adjusting window size...");}
 
-function adjustBrightness() {show_message("Adjusting brightness...");}
+function AdjustBrightness() {show_message("Adjusting brightness...");}
 
-function changeControls() {show_message("Changing controls...");}
+function ChangeControls() {show_message("Changing controls...");}
 
-function goBackToGeneral() {menu_level = GENERAL;}
+function GoBackToGeneral() {menu_level = GENERAL;}
 
 
 // Dynamically calculate menu width and height.
@@ -126,26 +130,12 @@ function drawMenu(x, y, zoom, text_scale)
 }
 
 
-// Function to toggle menu visibility and state.
-function toggleMenu(is_on)
-{
-    active = is_on;
-    position = 0;
-    menu_level = GENERAL;
-    option_length = array_length(menu[menu_level]);
-    
-    if (is_on)
-	{
-        state = stateInGame;
-    } else
-	{
-        state = stateTitleScreen;
-    }
-}
-
 // Title screen state.
 stateTitleScreen = function()
 {
+	// Changes menu options.
+	menu[0][0] = ["Start Game", StartGame];
+
     MenuHeightAndWidth();
     
     // Center menu.
@@ -159,6 +149,9 @@ stateTitleScreen = function()
 // In-game state.
 stateInGame = function()
 {
+	// Changes menu option
+	menu[0][0] = ["Continue Game", ContinueGame];
+
     MenuHeightAndWidth();
     
     // Center menu.

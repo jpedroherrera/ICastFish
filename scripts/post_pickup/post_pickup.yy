@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"post_pickup",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"post_pickup",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
