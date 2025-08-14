@@ -7,6 +7,7 @@ if (instance_exists(obj_GameController) && instance_number(obj_GameController) >
 
 // General Game Settings.
 window_set_fullscreen(true);
+window_set_cursor(cr_none);
 
 // Player inventory.
 // Inventory variables.

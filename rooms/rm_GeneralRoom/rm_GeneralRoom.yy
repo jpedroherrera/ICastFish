@@ -82,6 +82,7 @@
     {"name":"inst_58C226A3","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},
     {"name":"inst_40B42E6B","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},
     {"name":"inst_3A30285E","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},
+    {"name":"inst_55A7FE2D","path":"rooms/rm_GeneralRoom/rm_GeneralRoom.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -166,6 +167,7 @@
         {"$GMRInstance":"v2","%Name":"inst_4E427C42","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_4E427C42","objectId":{"name":"obj_SmallTreeLG","path":"objects/obj_SmallTreeLG/obj_SmallTreeLG.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":1104.0,"y":112.0,},
         {"$GMRInstance":"v2","%Name":"inst_58C226A3","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_58C226A3","objectId":{"name":"obj_SmallTreeLG","path":"objects/obj_SmallTreeLG/obj_SmallTreeLG.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":384.0,"y":240.0,},
         {"$GMRInstance":"v2","%Name":"inst_3A30285E","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3A30285E","objectId":{"name":"obj_Inventory","path":"objects/obj_Inventory/obj_Inventory.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":-160.0,"y":32.0,},
+        {"$GMRInstance":"v2","%Name":"inst_55A7FE2D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_55A7FE2D","objectId":{"name":"obj_Reticle","path":"objects/obj_Reticle/obj_Reticle.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":16.0,"y":16.0,},
       ],"layers":[],"name":"Instances_1","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRTileLayer":"","%Name":"tDetails","depth":300,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"tDetails","properties":[],"resourceType":"GMRTileLayer","resourceVersion":"2.0","tiles":{"SerialiseHeight":48,"SerialiseWidth":86,"TileCompressedData":[
           -192,-2147483648,3,1516,1517,1518,-83,-2147483648,3,1568,1569,1570,-37,-2147483648,8,188,189,190,-2147483648,
