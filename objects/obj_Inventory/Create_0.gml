@@ -7,7 +7,7 @@ width = 300;				// Default panel width.
 height = 400;				// Default panel height.
 min_height = 120;			// Minimum panel height in pixels (before zoom).
 option_border = 12;			// Padding inside panel.
-option_space = 32;			// Vertical space per item.
+option_space = 64;			// Spacing per item.
 item_text_offset = 4;		// Pixels below the sprite for item name.
 text_scale = 1;				// Base text scale.
 zoom = 1;					// Dynamic zoom factor.
@@ -31,21 +31,23 @@ confirm_cooldown = 200;      // ms between inputs.
 font_main = global.font_main;
 
 // Category / submenu system.
-GENERAL = 0;
+ALL_ITEMS = 0;
 WEAPONS = 1;
 CONSUMABLES = 2;
-menu_level = GENERAL;        // Default category.
+VALUABLES = 3
+menu_level = ALL_ITEMS;        // Default category.
 
 // Category names for display.
 category_names = [
-    "All Items",      // GENERAL
-    "Weapons",        // WEAPONS
-    "Consumables"     // CONSUMABLES
+    "All Items",		// ALL_ITEMS (includes all items in inventory).
+    "Weapons",			// WEAPONS (e.g., staff).
+    "Consumables",		// CONSUMABLES (e.g., potions).
+	"Valuables"			// VALUABLES (e.g., currency).
 ];
 
 
 // Functions
-function drawInventoryItem(_item, _x, _y, _highlight)
+function drawInventoryItem(item, _x, _y, _highlight)
 {
     if (_highlight)
     {
@@ -56,12 +58,12 @@ function drawInventoryItem(_item, _x, _y, _highlight)
     draw_set_color(c_white);
     draw_set_font(font_main);
 
-    var item_text = _item.item_name + " (Type: " + string(_item.item_type) + ", Value: " + string(_item.item_value) + ")";
+    var item_text = item.name + " (Type: " + string(item.type) + ", Value: " + string(item.value) + ")";
     draw_text_transformed(_x + 8 * zoom, _y + 4 * zoom, item_text, zoom, zoom, 0);
 
-    if (is_undefined(_item.sprite_index) == false && _item.sprite_index != noone)
+    if (is_undefined(item._sprite_index) == false && item._sprite_index != noone)
     {
-        draw_sprite_ext(_item.sprite_index, 0, _x + width * zoom - 24 * zoom, _y + 16 * zoom, zoom, zoom, 0, c_white, 1);
+        draw_sprite_ext(item._sprite_index, 0, _x + width * zoom - 24 * zoom, _y + 16 * zoom, zoom, zoom, 0, c_white, 1);
     }
 }
 
@@ -76,16 +78,39 @@ function drawPanel(_x, _y)
 // Function to filter inventory by category.
 function getFilteredItems()
 {
-    var items = global.Inv.items;
+    var source = global.Inv.items;
+    var out = [];
+    var source_length = array_length(source);
 
-    switch (menu_level)
+    for (var i = 0; i < source_length; i++)
     {
-        case WEAPONS: items = array_filter(items, function(i) { return i.item_type == "weapon"; }); break;
-        case CONSUMABLES: items = array_filter(items, function(i) { return i.item_type == "consumable"; }); break;
-        default: break; // GENERAL shows all.
+        var item = source[i];
+
+        // Keep only valid structs with a 'type'.
+        if (!is_struct(item)) continue;
+        if (!variable_struct_exists(item, "type")) continue;
+
+        switch (menu_level)
+        {
+            case WEAPONS:
+                if (item.type == "weapon") array_push(out, item);
+                break;
+
+            case CONSUMABLES:
+                if (item.type == "consumable") array_push(out, item);
+                break;
+
+			case VALUABLES:
+				if (item.type == "currency" || item.type = "valuables") array_push(out, item);
+				break;
+
+            default: // All items section.
+                array_push(out, item);
+                break;
+        }
     }
 
-    return items;
+    return out;
 }
 
 

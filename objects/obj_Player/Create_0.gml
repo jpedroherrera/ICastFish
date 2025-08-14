@@ -16,13 +16,157 @@ invincibility = false;
 invincibility_timer = fps;
 
 // Inventory.
-inventory = ds_map_create();
+menu_or_inventory = "";
 
 
 // Finds vallue between two numbers, approaching the target value at a specified amount.
 approach = function(val, target, amount)
 {
     return (val < target) ? min(val + amount, target) : max(val - amount, target);
+}
+
+
+// This functions handles menu and inventory toggles.
+function check_menu_or_inventory_toggle()
+{
+	// Check for menu toggle.
+    if (keyboard_check_pressed(vk_escape))
+    {
+		state = stateMenu;
+		menu_or_inventory = "menu";
+		return; // Skip movement this frame.
+    }
+	
+	// Check for inventory toggle.
+    if (keyboard_check_pressed(vk_tab))
+    {
+		// Force idle animation before switching states
+	    sprite_index = sprite[face + 8]; 
+
+		state = stateMenu;
+		menu_or_inventory = "inventory";
+		return; // Skip movement this frame.
+    }
+}
+
+
+// This function checks for ladder interactability.
+function check_for_ladder_interaction()
+{
+	// Enter ladder climbing state if ladder is detected.
+    if (place_meeting(x, y, obj_Ladder) && ladder_available && (up || down))
+    {
+        horizontal_speed = 0;
+        vertical_speed = 0;
+        state = stateLadder;
+    }
+
+	// Cooldown timer after dismounting a ladder.
+    if (!ladder_available)
+    {
+        ladder_dismount_timer -= 1;
+        if (ladder_dismount_timer <= 0) ladder_available = true;
+    }
+}
+
+
+// This function handles all player sprites.
+function set_player_sprite()
+{
+	// Set Sprite for when the player is holding a weapon.
+	// This sets the player sprite to always face the reticle, which is better for combat.
+	
+	// When a player is no longer holding an item, to set animation back to WASD, replace x and y with 0, 0, input_x, input_y)
+	// Can also delete redundant switch case for animation based on WASD.
+    if (input_x != 0 || input_y != 0) {
+        var move_dir = point_direction(x, y, mouse_x, mouse_y);
+        // Round to nearest 45° for 8-directional movement.
+        move_dir = round(move_dir / 45) * 45;
+        
+        switch (move_dir)
+        {
+            case 0:   // Right
+                face = RIGHT;
+                break;
+            case 45:  // Right + Up
+                face = DIAGRU;
+                break;
+            case 90:  // Up
+                face = UP;
+                break;
+            case 135: // Left + Up
+                face = DIAGLU;
+                break;
+            case 180: // Left
+                face = LEFT;
+                break;
+            case 225: // Left + Down
+                face = DIAGLD;
+                break;
+            case 270: // Down
+                face = DOWN;
+                break;
+            case 315: // Right + Down
+                face = DIAGRD;
+                break;
+        }
+
+        sprite_index = sprite[face];
+    }
+    else
+    {
+        // Not moving: Use idle sprites
+		if (input_x == 0 && input_y == 0)
+		{
+			var move_dir = point_direction(x, y, mouse_x, mouse_y);
+			 move_dir = round(move_dir / 45) * 45;
+			 
+			 switch(move_dir)
+			 {
+				case 0:   // Right
+                face = RIGHT;
+                break;
+            case 45:  // Right + Up
+                face = DIAGRU;
+                break;
+            case 90:  // Up
+                face = UP;
+                break;
+            case 135: // Left + Up
+                face = DIAGLU;
+                break;
+            case 180: // Left
+                face = LEFT;
+                break;
+            case 225: // Left + Down
+                face = DIAGLD;
+                break;
+            case 270: // Down
+                face = DOWN;
+                break;
+            case 315: // Right + Down
+                face = DIAGRD;
+                break;	
+			 }
+        sprite_index = sprite[face + 8]; // Set idle sprite (offset by 8)
+		}
+    }
+}
+
+
+// This function handles door interaction.
+function check_for_door_interaction()
+{
+	// Check for door interaction.
+	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_GeneralRoom
+	{
+		room_goto(rm_HouseInterior)
+	}
+
+	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_HouseInterior
+	{
+		room_goto(rm_GeneralRoom);	
+	}
 }
 
 
@@ -104,116 +248,13 @@ stateFree = function()
         y += vertical_speed;
     }
 	
-	//Set Sprite for when the player is holding a weapon 
-	//This sets the player sprite to always face the reticle, which is better for combat
-	
-	//When a player is no longer holding an item, to set animation back to WASD, replace x and y with 0, 0, input_x, input_y)
-	//Can also delete redundant switch case for animation based on WASD.
-    if (input_x != 0 || input_y != 0) {
-        var move_dir = point_direction(x, y, mouse_x, mouse_y);
-        // Round to nearest 45° for 8-directional movement
-        move_dir = round(move_dir / 45) * 45;
-        
-        switch (move_dir)
-        {
-            case 0:   // Right
-                face = RIGHT;
-                break;
-            case 45:  // Right + Up
-                face = DIAGRU;
-                break;
-            case 90:  // Up
-                face = UP;
-                break;
-            case 135: // Left + Up
-                face = DIAGLU;
-                break;
-            case 180: // Left
-                face = LEFT;
-                break;
-            case 225: // Left + Down
-                face = DIAGLD;
-                break;
-            case 270: // Down
-                face = DOWN;
-                break;
-            case 315: // Right + Down
-                face = DIAGRD;
-                break;
-        }
+	set_player_sprite();
 
-        sprite_index = sprite[face];
-    }
-    else
-    {
-        // Not moving: Use idle sprites
-		if input_x == 0 && input_y == 0
-		{
-			var move_dir = point_direction(x, y, mouse_x, mouse_y);
-			 move_dir = round(move_dir / 45) * 45;
-			 
-			 switch(move_dir)
-			 {
-				case 0:   // Right
-                face = RIGHT;
-                break;
-            case 45:  // Right + Up
-                face = DIAGRU;
-                break;
-            case 90:  // Up
-                face = UP;
-                break;
-            case 135: // Left + Up
-                face = DIAGLU;
-                break;
-            case 180: // Left
-                face = LEFT;
-                break;
-            case 225: // Left + Down
-                face = DIAGLD;
-                break;
-            case 270: // Down
-                face = DOWN;
-                break;
-            case 315: // Right + Down
-                face = DIAGRD;
-                break;	
-			 }
-        sprite_index = sprite[face + 8]; // Set idle sprite (offset by 8)
-    }
+	check_for_door_interaction();
 
-	// Enter ladder climbing state if ladder is detected.
-    if (place_meeting(x, y, obj_Ladder) && ladder_available && (up || down))
-    {
-        horizontal_speed = 0;
-        vertical_speed = 0;
-        state = stateLadder;
-    }
+	check_for_ladder_interaction();
 
-	// Cooldown timer after dismounting a ladder.
-    if (!ladder_available)
-    {
-        ladder_dismount_timer -= 1;
-        if (ladder_dismount_timer <= 0) ladder_available = true;
-    }
-
-	// Check for door interaction.
-	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_GeneralRoom
-	{
-		room_goto(rm_HouseInterior)
-	}
-
-	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_HouseInterior
-	{
-		room_goto(rm_GeneralRoom);	
-	}
-
-	// Check for menu toggle
-    if (keyboard_check_pressed(vk_escape))
-    {
-		state = stateMenu;
-		return; // Skip movement this frame
-    }
+	check_menu_or_inventory_toggle();
 }
 
 // Handles climbing movement on ladders.
@@ -239,39 +280,59 @@ stateLadder = function()
         vertical_speed = 0;
         state = stateFree;
     }
+
+	check_menu_or_inventory_toggle();
 }
 
 stateMenu = function()
 {
-	var menu_inst = instance_find(obj_Menu, 0);
-
-	if (menu_inst == noone)
+	if (menu_or_inventory == "menu")
 	{
-		// Create menu instance if none exists
-		menu_inst = instance_create_depth(x, y, -100, obj_Menu);
-	}
+		var menu_inst = instance_find(obj_Menu, 0);
 
-	menu_inst.active = true;
-	menu_inst.state = menu_inst.stateInGame; // Set to in-game state
+		if (menu_inst == noone)
+		{
+			// Create menu instance if none exists
+			menu_inst = instance_create_depth(x, y, -100, obj_Menu);
+		}
 
-    horizontal_speed = 0;
-    vertical_speed = 0;
+		menu_inst.active = true;
+		menu_inst.state = menu_inst.stateInGame; // Set to in-game state
 
-    obj_Camera.zoom = lerp(obj_Camera.zoom, 2, 0.1);
+	    horizontal_speed = 0;
+	    vertical_speed = 0;
+
+	    obj_Camera.zoom = lerp(obj_Camera.zoom, 2, 0.1);
 	
-	// Close menu on Escape key press
-    if (keyboard_check_pressed(vk_escape) || obj_Menu.continue_game == true)
-    {
-        if (menu_inst != noone)
-        {
-            menu_inst.active = false;
-        }
+		// Close menu on Escape key press
+	    if (keyboard_check_pressed(vk_escape) || obj_Menu.continue_game == true)
+	    {
+	        if (menu_inst != noone)
+	        {
+	            menu_inst.active = false;
+	        }
 
-		obj_Menu.continue_game = false;
+			obj_Menu.continue_game = false;
 
-        state = stateFree;
-        return;
-    }
+			menu_or_inventory = "";
+
+	        state = stateFree;
+	        return;
+	    }
+	}
+	else // i.e., menu_or_inventory == "inventory"
+	{
+		horizontal_speed = 0;
+	    vertical_speed = 0;
+		
+		if (keyboard_check_pressed(vk_tab))
+		{
+			menu_or_inventory = "";
+			
+			state = stateFree;
+			return;
+		}
+	}
 }
 
 

@@ -1,24 +1,33 @@
 // Inventory() -> returns a struct with methods and data.
 function Inventory() constructor
 {
-    items = []; // can be strings or item structs.
+    items = []; // Array of item structs.
 
     add_item = function(item)
 	{
-        var i = array_length(items);
-        items[i] = item;
+        // Reject anything that isn't a struct with at least an id and name.
+        if (!is_struct(item)) return;
+        if (!variable_struct_exists(item, "id"))  return;
+        if (!variable_struct_exists(item, "name")) return;
+
+        // Ensure optional members exist.
+        if (!variable_struct_exists(item, "_sprite_index")) item._sprite_index = noone;
+
+        if (!has_item(item.id))
+        {
+            array_push(items, item);
+        }
     }
 
     has_item = function(_id)
 	{
-        var n = array_length(items);
-	    for (var i = 0; i < n; i++)
+        var item_array_length = array_length(items);
+	    for (var i = 0; i < item_array_length; i++)
 		{
-	        // If it's a struct, check the .id field.
-	        if (is_struct(items[i]) && items[i].id == _id) return true;
+	        var it = items[i];
 
-			// Fallback for string storage.
-	        if (items[i] == _id) return true;
+            // If it's a struct, check the .id field.
+			if (is_struct(it) && variable_struct_exists(it, "id") && it.id == _id) return true;
 	    }
 	    return false;
     };
@@ -34,11 +43,28 @@ function Inventory() constructor
         return false;
     };
 
+	function sanitize()
+    {
+        for (var i = array_length(items) - 1; i >= 0; i--)
+        {
+            var it = items[i];
+            if (!is_struct(it)) { array_delete(items, i, 1); continue; }
+            if (!variable_struct_exists(it, "id"))   { array_delete(items, i, 1); continue; }
+            if (!variable_struct_exists(it, "name")) { array_delete(items, i, 1); continue; }
+            if (!variable_struct_exists(it, "_sprite_index")) it._sprite_index = noone;
+            if (!variable_struct_exists(it, "type")) it.type = "misc";
+            if (!variable_struct_exists(it, "value")) it.value = 0;
+        }
+    }
+
     count = function(item)
 	{
-        var c = 0, n = array_length(items);
-        for (var i = 0; i < n; i++) {if (items[i] == item) c++};
-        return c;
+        var counter = 0;
+		var item_array_length = array_length(items);
+
+		for (var i = 0; i < item_array_length; i++) {if (items[i] == item) counter++};
+
+        return counter;
     };
 
     list = function()

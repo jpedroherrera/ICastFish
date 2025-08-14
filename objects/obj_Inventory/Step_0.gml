@@ -12,10 +12,10 @@ if (visible)
     var inv_size = array_length(inv_items);
 
     // Read key states.
-    var up = keyboard_check(vk_up);
-    var down = keyboard_check(vk_down);
-    var left = keyboard_check(vk_left);
-    var right = keyboard_check(vk_right);
+    var up = keyboard_check(ord("W"));
+    var down = keyboard_check(ord("S"));
+    var left = keyboard_check(ord("A"));
+    var right = keyboard_check(ord("D"));
     var confirm = keyboard_check(vk_enter);
 
     var up_pressed = up && !prev_up;
@@ -49,13 +49,13 @@ if (visible)
     if (left_pressed)
     {
         menu_level -= 1;
-        if (menu_level < GENERAL) menu_level = CONSUMABLES;
+        if (menu_level < ALL_ITEMS) menu_level = CONSUMABLES;
         position = 0; scroll_index = 0;
     }
     if (right_pressed)
     {
         menu_level += 1;
-        if (menu_level > CONSUMABLES) menu_level = GENERAL;
+        if (menu_level > array_length(category_names)-1) menu_level = ALL_ITEMS;
         position = 0; scroll_index = 0;
     }
 
@@ -66,7 +66,7 @@ if (visible)
         if (position < inv_size)
         {
             var item = inv_items[position];
-            show_message("Using or inspecting " + item.item_name);
+            show_message("Using or inspecting " + item.name);
         }
     }
 };

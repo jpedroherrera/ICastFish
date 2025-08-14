@@ -11,5 +11,6 @@ window_set_cursor(cr_none);
 
 // Player inventory.
 // Inventory variables.
-global.Inv = new Inventory(); // from scr_inventory.gml.
-global.Collected = [];          // array of pickup UIDs.
+global.Inv = new Inventory();	// from scr_inventory.gml.
+global.Inv.sanitize();			// Ensures a clean inventory.
+global.Collected = [];          // Array of pickup UIDs.

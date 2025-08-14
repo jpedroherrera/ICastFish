@@ -2,6 +2,7 @@
 item_id = "wooden_staff";
 item_name = "Super Cool Wooden Staff";
 item_type = "weapon";
+item_is_stackable = false;
 item_value = 10; // Damage in this case.
 item_sprite = sprite_index;
 
