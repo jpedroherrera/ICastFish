@@ -8,7 +8,7 @@ max_magica = 100;
 move_speed = 1.5;
 acceleration = 0.7;
 fric = 0.7;
-ladder_available = true;
+ladder_available = false;
 ladder_dismount_timer = 0;
 
 // Combat characteristics.
@@ -17,13 +17,6 @@ invincibility_timer = fps;
 
 // Inventory.
 menu_or_inventory = "";
-
-
-// Finds vallue between two numbers, approaching the target value at a specified amount.
-approach = function(val, target, amount)
-{
-    return (val < target) ? min(val + amount, target) : max(val - amount, target);
-}
 
 
 // This functions handles menu and inventory toggles.
@@ -73,11 +66,7 @@ function check_for_ladder_interaction()
 // This function handles all player sprites.
 function set_player_sprite()
 {
-	// Set Sprite for when the player is holding a weapon.
-	// This sets the player sprite to always face the reticle, which is better for combat.
-	
-	// When a player is no longer holding an item, to set animation back to WASD, replace x and y with 0, 0, input_x, input_y)
-	// Can also delete redundant switch case for animation based on WASD.
+	// This sets the player sprite to always face the mouse.
     if (input_x != 0 || input_y != 0) {
         var move_dir = point_direction(x, y, mouse_x, mouse_y);
         // Round to nearest 45° for 8-directional movement.
@@ -248,7 +237,7 @@ stateFree = function()
         y += vertical_speed;
     }
 	
-	set_player_sprite();
+	set_enemy_sprite();
 
 	check_for_door_interaction();
 

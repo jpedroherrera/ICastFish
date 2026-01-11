@@ -31,3 +31,10 @@ function pickup_make_uid(_room_index, _x, _y, _item_id)
     var rname = room_get_name(_room_index);
     return string(rname) + "@" + string(floor(_x)) + "," + string(floor(_y)) + "@" + string(_item_id);
 }
+
+
+// Finds vallue between two numbers, approaching the target value at a specified amount.
+function approach(val, target, amount)
+{
+    return (val < target) ? min(val + amount, target) : max(val - amount, target);
+}
