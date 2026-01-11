@@ -10,6 +10,10 @@ acceleration = 0.7;
 fric = 0.7;
 ladder_available = true;
 ladder_dismount_timer = 0;
+dodge_timer_max = 120;
+dodge_timer = dodge_timer_max;
+dodge_amount = 30;
+
 
 // Combat characteristics.
 invincibility = false;
@@ -247,6 +251,22 @@ stateFree = function()
 	    x += horizontal_speed;
         y += vertical_speed;
     }
+	
+	//Subtract from dodge_timer to make dodging available
+	dodge_timer --;
+	
+	//Check for input & dodge if timer is below zero, then reset timer
+	if dodge && dodge_timer <= 0
+	{
+		//spawn a good ol poof effect that destroys itself after it plays it's animation.
+		instance_create_layer(xprevious, yprevious, "Instances_1", obj_Poof);
+		dodge_timer = dodge_timer_max;
+		//apply direction to the dodge.
+		if keyboard_check(ord("W")) {y -= dodge_amount;}
+		if keyboard_check(ord("S")) {y += dodge_amount;}
+		if keyboard_check(ord("A")) {x -= dodge_amount;}
+		if keyboard_check(ord("D")) {x += dodge_amount;}
+	}
 	
 	set_player_sprite();
 
