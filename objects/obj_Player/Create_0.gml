@@ -231,10 +231,9 @@ stateFree = function() {
 	dodge_timer --;
 	
 	//Check for input & dodge if timer is below zero, then reset timer
-	if dodge && dodge_timer <= 0
-	{
+	if dodge && dodge_timer <= 0 {
 		//spawn a good ol poof effect that destroys itself after it plays it's animation.
-		instance_create_layer(xprevious, yprevious, "Instances_1", obj_Poof);
+		instance_create_layer(xprevious, yprevious, "MainInstances", obj_Poof);
 		dodge_timer = dodge_timer_max;
 		//apply direction to the dodge.
 		if keyboard_check(ord("W")) {y -= dodge_amount;}
