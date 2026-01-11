@@ -3,8 +3,7 @@ if (!active || !visible) return;
 // Panel position relative to player.
 var panel_x, panel_y;
 
-if (instance_exists(obj_Player))
-{
+if (instance_exists(obj_Player)) {
     panel_x = display_get_gui_width()/2 - width * zoom/2;
 	panel_y = display_get_gui_height()/2 - height * zoom/2;
 }
@@ -29,17 +28,14 @@ draw_text_transformed(panel_x + option_border * zoom, panel_y + option_border * 
 // Draw items.
 var start_y = panel_y + 32 * zoom; // Space below header.
 
-if (inv_size > 0)
-{
-	for (var i = scroll_index; i < min(scroll_index + max_visible_items, inv_size); i++)
-	{
+if (inv_size > 0) {
+	for (var i = scroll_index; i < min(scroll_index + max_visible_items, inv_size); i++) {
 	    var item = inv_items[i];
 	    var y_pos = start_y + (i - scroll_index) * option_space * zoom;
 	    var highlight = (i == position);
 
 	    // Draw highlight rectangle (covers sprite + name).
-	    if (highlight)
-	    {
+	    if (highlight) {
 	        draw_set_color(make_color_rgb(255, 255, 180)); // Pastel yellow.
 	        draw_set_alpha(0.4);
 	        draw_rectangle(panel_x, y_pos, panel_x + width * zoom, y_pos + option_space * zoom, false);
@@ -47,11 +43,9 @@ if (inv_size > 0)
 	    }
 
 	    // Draw item sprite if it exists.
-	    if (is_struct(item))
-	    {
+	    if (is_struct(item)) {
 	        // Draw sprite centered in slot
-	        if (variable_struct_exists(item, "_sprite_index") && item._sprite_index != noone && sprite_exists(item._sprite_index))
-	        {
+	        if (variable_struct_exists(item, "_sprite_index") && item._sprite_index != noone && sprite_exists(item._sprite_index)) {
 	            var spr_w = sprite_get_width(item._sprite_index);
 	            var spr_h = sprite_get_height(item._sprite_index);
 
@@ -61,13 +55,11 @@ if (inv_size > 0)
 	            draw_sprite_ext(item._sprite_index, 0, sprite_center_x, sprite_center_y-10, zoom, zoom, 0, c_white, 1);
 
 				// Draw text over sprite, centered
-	            if (variable_struct_exists(item, "name"))
-	            {
+	            if (variable_struct_exists(item, "name")) {
 					var display_name = item.name;
 
 				    // Show quantity for currency
-				    if (item.stackable == true)
-				    {
+				    if (item.stackable == true) {
 				        display_name += " x" + string(item.quantity); // e.g., "Coin x10"
 				    }
 

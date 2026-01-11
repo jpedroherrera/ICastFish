@@ -1,8 +1,6 @@
 // Function to handle lighting cutout drawing.
-function LightingCutoutFor(_obj)
-{
-    with (_obj)
-    {
+function LightingCutoutFor(_obj) {
+    with (_obj) {
         var wobble_amount_x = image_xscale + random_range(-wobble, wobble);
         var wobble_amount_y = image_yscale + random_range(-wobble, wobble);
         
@@ -18,10 +16,8 @@ function LightingCutoutFor(_obj)
 
 
 // Function to handle ember cutout drawing.
-function EmberCutoutFor(_obj)
-{
-    with (_obj)
-    {
+function EmberCutoutFor(_obj) {
+    with (_obj) {
         var wobble_amount_x = image_xscale + random_range(-ember_wobble, ember_wobble);
         var wobble_amount_y = image_yscale + random_range(-ember_wobble, ember_wobble);
         
@@ -39,8 +35,7 @@ function EmberCutoutFor(_obj)
 
 
 // Create surface if it doesn't exist.
-if (surface_exists(lighting_surface) == false)
-{
+if (surface_exists(lighting_surface) == false) {
 	lighting_surface = surface_create(room_width, room_height);
 }
 

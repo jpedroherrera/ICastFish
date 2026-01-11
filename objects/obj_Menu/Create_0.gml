@@ -56,8 +56,7 @@ option_length = array_length(menu[menu_level]);
 
 
 // Function to select a menu option.
-function selectOption(_level, _index)
-{
+function selectOption(_level, _index) {
     var func = menu[_level][_index][1]; // Get function reference.
     if (is_method(func) || is_callable(func)) {
         func(); // Call the function.
@@ -66,7 +65,7 @@ function selectOption(_level, _index)
 
 
 // General menu option functions.
-function StartGame() {room_goto(rm_GeneralRoom);}
+function StartGame() {room_goto(rm_Base);}
 
 function ContinueGame() {continue_game = true;}
 
@@ -86,15 +85,13 @@ function GoBackToGeneral() {menu_level = GENERAL;}
 
 
 // Dynamically calculate menu width and height.
-function MenuHeightAndWidth()
-{
+function MenuHeightAndWidth() {
     max_width = 0;
     max_height = 0;
 	// Set the font for measurement.
     draw_set_font(global.font_main);
 
-    for (var i = 0; i < option_length; i++)
-	{
+    for (var i = 0; i < option_length; i++) {
         var option_text = menu[menu_level][i][0];
         var option_width = string_width(option_text);
         var option_height = string_height(option_text);
@@ -109,8 +106,7 @@ function MenuHeightAndWidth()
 
 
 // Function to draw the menu.
-function drawMenu(x, y, zoom, text_scale)
-{
+function drawMenu(x, y, zoom, text_scale) {
 	// Draw menu background.
     draw_sprite_ext(sprite_index, image_index, x, y, width / sprite_width, height / sprite_height, 0, c_white, 1);
     
@@ -119,8 +115,7 @@ function drawMenu(x, y, zoom, text_scale)
 	draw_set_valign(fa_middle);
 	draw_set_halign(fa_center);
 
-    for (var i = 0; i < option_length; i++)
-	{
+    for (var i = 0; i < option_length; i++) {
         var color = (position == i) ? c_yellow : c_white;
         var option_y = y - height / 2 + option_border + max_height / 2 + (max_height + option_space) * i;
 		var option_text = menu[menu_level][i][0];
@@ -131,8 +126,7 @@ function drawMenu(x, y, zoom, text_scale)
 
 
 // Title screen state.
-stateTitleScreen = function()
-{
+stateTitleScreen = function() {
 	// Changes menu options.
 	menu[0][0] = ["Start Game", StartGame];
 
@@ -147,20 +141,18 @@ stateTitleScreen = function()
 }
 
 // In-game state.
-stateInGame = function()
-{
+stateInGame = function() {
 	// Changes menu option
 	menu[0][0] = ["Continue Game", ContinueGame];
 
     MenuHeightAndWidth();
     
     // Center menu.
-    if (instance_exists(obj_Player))
-	{
+    if (instance_exists(obj_Player)) {
         x = obj_Player.x;
         y = obj_Player.y;
-    } else 
-	{
+    }
+	else {
         x = camera_get_view_x(view_camera[0]) + camera_get_view_width(view_camera[0]) / 2;
         y = camera_get_view_y(view_camera[0]) + camera_get_view_height(view_camera[0]) / 2;
     }

@@ -13,26 +13,23 @@ ladder_dismount_timer = 0;
 
 // Combat characteristics.
 invincibility = false;
-invincibility_timer = fps;
+invincibility_timer = 0;
 
 // Inventory.
 menu_or_inventory = "";
 
 
 // This functions handles menu and inventory toggles.
-function check_menu_or_inventory_toggle()
-{
+function check_menu_or_inventory_toggle() {
 	// Check for menu toggle.
-    if (keyboard_check_pressed(vk_escape))
-    {
+    if (keyboard_check_pressed(vk_escape)) {
 		state = stateMenu;
 		menu_or_inventory = "menu";
 		return; // Skip movement this frame.
     }
 	
 	// Check for inventory toggle.
-    if (keyboard_check_pressed(vk_tab))
-    {
+    if (keyboard_check_pressed(vk_tab)) {
 		// Force idle animation before switching states
 	    sprite_index = sprite[face + 8]; 
 
@@ -44,19 +41,16 @@ function check_menu_or_inventory_toggle()
 
 
 // This function checks for ladder interactability.
-function check_for_ladder_interaction()
-{
+function check_for_ladder_interaction() {
 	// Enter ladder climbing state if ladder is detected.
-    if (place_meeting(x, y, obj_Ladder) && ladder_available && (up || down))
-    {
+    if (place_meeting(x, y, obj_Ladder) && ladder_available && (up || down)) {
         horizontal_speed = 0;
         vertical_speed = 0;
         state = stateLadder;
     }
 
 	// Cooldown timer after dismounting a ladder.
-    if (!ladder_available)
-    {
+    if (!ladder_available) {
         ladder_dismount_timer -= 1;
         if (ladder_dismount_timer <= 0) ladder_available = true;
     }
@@ -64,16 +58,14 @@ function check_for_ladder_interaction()
 
 
 // This function handles all player sprites.
-function set_player_sprite()
-{
+function set_player_sprite() {
 	// This sets the player sprite to always face the mouse.
     if (input_x != 0 || input_y != 0) {
         var move_dir = point_direction(x, y, mouse_x, mouse_y);
         // Round to nearest 45° for 8-directional movement.
         move_dir = round(move_dir / 45) * 45;
         
-        switch (move_dir)
-        {
+        switch (move_dir) {
             case 0:   // Right
                 face = RIGHT;
                 break;
@@ -102,16 +94,13 @@ function set_player_sprite()
 
         sprite_index = sprite[face];
     }
-    else
-    {
+    else {
         // Not moving: Use idle sprites
-		if (input_x == 0 && input_y == 0)
-		{
+		if (input_x == 0 && input_y == 0) {
 			var move_dir = point_direction(x, y, mouse_x, mouse_y);
 			 move_dir = round(move_dir / 45) * 45;
 			 
-			 switch(move_dir)
-			 {
+			 switch(move_dir) {
 				case 0:   // Right
                 face = RIGHT;
                 break;
@@ -144,17 +133,20 @@ function set_player_sprite()
 
 
 // This function handles door interaction.
-function check_for_door_interaction()
-{
+function check_for_door_interaction() {
 	// Check for door interaction.
-	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_GeneralRoom
-	{
-		room_goto(rm_HouseInterior)
-	}
+	if (place_meeting(x, y, par_Door) && keyboard_check_pressed(ord("E"))) {
+		var door_instance = instance_place(x, y, par_Door);
 
-	if place_meeting(x, y, obj_DoorTrigger) && keyboard_check_pressed(ord("E")) && room == rm_HouseInterior
-	{
-		room_goto(rm_GeneralRoom);	
+		if (door_instance != noone) {
+		    // Get the instance ID (unique to this specific instance)
+		    var door_instance_id = door_instance; // e.g., inst_2B1FDDAB
+    
+		    // Get the object type/index (what kind of object it is)
+		    var object_type = door_instance.object_index; // e.g., obj_DoorToHouseInterior
+
+			room_goto(object_type.destination);
+		}
 	}
 }
 
@@ -194,18 +186,15 @@ input_y = 0;
 
 
 // Handles generic player movement.
-stateFree = function()
-{
+stateFree = function() {
 	// Directional input.
     input_x = right - left;
     input_y = down - up;
 
-    if (input_x != 0 || input_y != 0)
-    {
+    if (input_x != 0 || input_y != 0) {
 		// Prevent faster movement when pressing both directions.
 		var length = point_distance(0, 0, input_x, input_y);
-        if (length > 0)
-        {
+        if (length > 0) {
             input_x /= length;
             input_y /= length;
         }
@@ -216,28 +205,25 @@ stateFree = function()
 
         // Cap speed.
         var speed_length = point_distance(0, 0, horizontal_speed, vertical_speed);
-        if (speed_length > move_speed)
-		{
+        if (speed_length > move_speed) {
             var factor = move_speed / speed_length;
             horizontal_speed *= factor;
             vertical_speed *= factor;
         }
     }
-    else
-    {
+    else {
 		// Apply friction.
         horizontal_speed = approach(horizontal_speed, 0, fric);
         vertical_speed = approach(vertical_speed, 0, fric);
     }
 
 	// Check for wall collision before applying movement.
-    if (!place_meeting(x + horizontal_speed, y + vertical_speed, par_Wall))
-    {
+    if (!place_meeting(x + horizontal_speed, y + vertical_speed, par_Wall)) {
 	    x += horizontal_speed;
         y += vertical_speed;
     }
 	
-	set_enemy_sprite();
+	set_player_sprite();
 
 	check_for_door_interaction();
 
@@ -247,23 +233,20 @@ stateFree = function()
 }
 
 // Handles climbing movement on ladders.
-stateLadder = function()
-{
+stateLadder = function() {
 	sprite_index = spr_PlayerUpWalk;
     var climb_speed = 2;
     var _climb = (down - up) * climb_speed;
     y += _climb;
 
 	// Slightly dampen vertical speed when idle on ladder.
-    if (_climb == 0) 
-	{
+    if (_climb == 0) {
 		vertical_speed *= 0.8;
 		sprite_index = spr_PlayerUpIdle;
 	}
 	
 	// Dismount ladder when jumping or exiting ladder area.
-    if (jump || !place_meeting(x, y, obj_Ladder))
-    {
+    if (jump || !place_meeting(x, y, obj_Ladder)) {
         ladder_available = false;
         ladder_dismount_timer = fps * 0.75;
         vertical_speed = 0;
@@ -275,12 +258,10 @@ stateLadder = function()
 
 stateMenu = function()
 {
-	if (menu_or_inventory == "menu")
-	{
+	if (menu_or_inventory == "menu") {
 		var menu_inst = instance_find(obj_Menu, 0);
 
-		if (menu_inst == noone)
-		{
+		if (menu_inst == noone) {
 			// Create menu instance if none exists
 			menu_inst = instance_create_depth(x, y, -100, obj_Menu);
 		}
@@ -294,10 +275,8 @@ stateMenu = function()
 	    obj_Camera.zoom = lerp(obj_Camera.zoom, 2, 0.1);
 	
 		// Close menu on Escape key press
-	    if (keyboard_check_pressed(vk_escape) || obj_Menu.continue_game == true)
-	    {
-	        if (menu_inst != noone)
-	        {
+	    if (keyboard_check_pressed(vk_escape) || obj_Menu.continue_game == true) {
+	        if (menu_inst != noone) {
 	            menu_inst.active = false;
 	        }
 
@@ -309,13 +288,11 @@ stateMenu = function()
 	        return;
 	    }
 	}
-	else // i.e., menu_or_inventory == "inventory"
-	{
+	else { // i.e., menu_or_inventory == "inventory"
 		horizontal_speed = 0;
 	    vertical_speed = 0;
 		
-		if (keyboard_check_pressed(vk_tab))
-		{
+		if (keyboard_check_pressed(vk_tab)) {
 			menu_or_inventory = "";
 			
 			state = stateFree;

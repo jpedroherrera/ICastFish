@@ -1,6 +1,5 @@
 // Ensure singleton if someone accidentally placed two.
-if (instance_exists(obj_GameController) && instance_number(obj_GameController) > 1)
-{
+if (instance_exists(obj_GameController) && instance_number(obj_GameController) > 1)	{
     instance_destroy();
     exit;
 }

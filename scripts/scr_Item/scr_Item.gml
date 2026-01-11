@@ -1,5 +1,4 @@
-function Item(_id, _name, _type, _stackable, _value, sprite) constructor
-{
+function Item(_id, _name, _type, _stackable, _value, sprite) constructor {
 	if (is_undefined(sprite)) sprite = noone; // Default.
  
     id    = _id;

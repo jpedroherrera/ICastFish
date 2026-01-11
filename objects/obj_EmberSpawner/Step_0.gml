@@ -1,7 +1,6 @@
 ember_timer += 1;
 
-if (ember_timer >= ember_interval)
-{
+if (ember_timer >= ember_interval) {
     ember_timer = 0;
     ember_interval = irandom_range(20, 50); // Slight randomness.
 

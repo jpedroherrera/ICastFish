@@ -3,6 +3,8 @@
   "%Name":"obj_ZombiePlayer",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":{"name":"obj_Player","path":"objects/obj_Player/obj_Player.yy",},"eventNum":0,"eventType":4,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
   "name":"obj_ZombiePlayer",
@@ -11,7 +13,10 @@
     "name":"Enemies",
     "path":"folders/Objects/Enemies.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"par_Enemy",
+    "path":"objects/par_Enemy/par_Enemy.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -30,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_EnemyDownIdle",
-    "path":"sprites/spr_EnemyDownIdle/spr_EnemyDownIdle.yy",
+    "name":"spr_ZombiePlayerDownIdle",
+    "path":"sprites/spr_ZombiePlayerDownIdle/spr_ZombiePlayerDownIdle.yy",
   },
   "spriteMaskId":null,
   "visible":true,

@@ -7,35 +7,29 @@ if target.face = LEFT || DIAGLD || DIAGLU {dir = 1}
 // === Zoom Control ===
 //Zoom fix for weird startup zoom level being outside of zoom bounds (hopefully, not working yet)
 
-if (obj_Player.state != obj_Player.stateMenu)
-{
-	if zoom_fix = 1
-	{
+if (obj_Player.state != obj_Player.stateMenu) {
+	if zoom_fix = 1 {
 		zoom = zoom_init
 	}	
 
-	if mouse_wheel_down() || mouse_wheel_up()
-	{
+	if mouse_wheel_down() || mouse_wheel_up() {
 		zoom_fix = 0	
 	}
 
-	if zoom_fix = 0
-	{
-	if (mouse_wheel_up()) 
-	{
-	    zoom_target = clamp(zoom_target + 0.1, 1.5, 2);
-	}
-	if (mouse_wheel_down()) 
-	{
-	    zoom_target = clamp(zoom_target - 0.1, 1.5, 2);
-	}
-	zoom = lerp(zoom, zoom_target, zoom_speed);
+	if zoom_fix = 0 {
+		if (mouse_wheel_up()) {
+		    zoom_target = clamp(zoom_target + 0.1, 1.5, 2);
+		}
+
+		if (mouse_wheel_down()) {
+		    zoom_target = clamp(zoom_target - 0.1, 1.5, 2);
+		}
+		zoom = lerp(zoom, zoom_target, zoom_speed);
 	}
 }
 
 // === Calculate Current View Size Based on Zoom ===
-if zoom_fix = 1
-{
+if zoom_fix = 1 {
 	var view_w = 640 / zoom_init
 	var view_h = 360 / zoom_init
 	
@@ -51,8 +45,7 @@ if zoom_fix = 1
 	camera_set_view_size(camera, view_w, view_h);
 	camera_set_view_pos(camera, cam_x, cam_y);
 }
-if zoom_fix = 0
-{
+if zoom_fix = 0 {
 	var view_w = 640 / zoom;
 	var view_h = 360 / zoom;
 	
@@ -72,7 +65,7 @@ if zoom_fix = 0
 }
 
 
-/*
+/* WHY IS THIS HERE, CAM?
 var view_w = 640 / zoom;
 var view_h = 360 / zoom;
  === Calculate Offset Target Position Based on Facing ===

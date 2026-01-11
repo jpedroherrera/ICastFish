@@ -33,10 +33,63 @@ sprite[DIAGRU + 8] = spr_ZombiePlayerDiagRUIdle;
 
 face = DOWN;
 
+
+// State-machine-related variables
+horizontal_speed = 0;
+vertical_speed = 0;
+move_horizontally = 0;	// 0 for no movement, 1 for right, -1 for left.
+move_vertically = 0;	// 0 for no movement, 1 for up, -1 for down.
+
 // Handles generic enemy movement.
-stateFree = function()
-{
+stateFree = function() {
+	set_enemy_sprite(self, x, y, horizontal_speed, vertical_speed, obj_Player.x, obj_Player.y);
 	
-	
-	set_enemy_sprite(self, x, y, phy_speed_x, phy_speed_y, xprevious, yprevious);
+	if (instance_exists(obj_Player)) {
+
+		if (obj_Player.x > x) {
+			move_horizontally = 1;
+		}
+		else if (obj_Player.x = x) {
+			move_horizontally = 0;
+		}
+		else {
+			move_horizontally = -1;
+		}
+		
+		if (obj_Player.y > y) {
+			move_vertically = 1;
+		}
+		else if (obj_Player.y = y) {
+			move_vertically = 0;
+		}
+		else {
+			move_vertically = -1;
+		}
+
+        // Apply acceleration.
+        horizontal_speed += move_horizontally * acceleration;
+        vertical_speed += move_vertically * acceleration;
+
+        // Cap speed.
+        var speed_length = point_distance(0, 0, horizontal_speed, vertical_speed);
+        if (speed_length > move_speed) {
+            var factor = move_speed / speed_length;
+            horizontal_speed *= factor;
+            vertical_speed *= factor;
+        }
+    }
+    else {
+		// Apply friction.
+        horizontal_speed = approach(horizontal_speed, 0, fric);
+        vertical_speed = approach(vertical_speed, 0, fric);
+    }
+
+	// Check for wall collision before applying movement.
+    if (!place_meeting(x + horizontal_speed, y + vertical_speed, par_Wall)) {
+	    x += horizontal_speed;
+        y += vertical_speed;
+    }
 }
+
+
+state = stateFree;

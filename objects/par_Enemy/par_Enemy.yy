@@ -11,10 +11,7 @@
     "name":"Parent Objects",
     "path":"folders/Objects/Parent Objects.yy",
   },
-  "parentObjectId":{
-    "name":"obj_ZombiePlayer",
-    "path":"objects/obj_ZombiePlayer/obj_ZombiePlayer.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

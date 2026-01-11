@@ -22,16 +22,14 @@ face = DOWN;
 */
 
 // This function handles all enemy sprites.
-function set_enemy_sprite(caller, x, y, phy_speed_x, phy_speed_y, xprevious, yprevious)
-{
+function set_enemy_sprite(caller, x, y, horizontal_speed, vertical_speed, target_x, target_y) {
 	// This sets the enemy sprite to face the direction it is moving.
-    if (phy_speed_x != 0 || phy_speed_y != 0) {
-        var move_dir = point_direction(x, y, xprevious, yprevious);
+    if (horizontal_speed != 0 || vertical_speed != 0) {
+        var move_dir = point_direction(x, y, target_x, target_y);
         // Round to nearest 45° for 8-directional movement.
         move_dir = round(move_dir / 45) * 45;
         
-        switch (move_dir)
-        {
+        switch (move_dir) {
             case 0:   // Right
                 face = RIGHT;
                 break;
@@ -60,16 +58,13 @@ function set_enemy_sprite(caller, x, y, phy_speed_x, phy_speed_y, xprevious, ypr
 
         caller.sprite_index = sprite[face];
     }
-    else
-    {
+    else {
         // Not moving: Use idle sprites
-		if (phy_speed_x == 0 && phy_speed_y == 0)
-		{
-			var move_dir = point_direction(x, y, xprevious, yprevious);
+		if (horizontal_speed == 0 && vertical_speed == 0) {
+			var move_dir = point_direction(x, y, target_y, target_y);
 			 move_dir = round(move_dir / 45) * 45;
 			 
-			 switch(move_dir)
-			 {
+			 switch(move_dir) {
 				case 0:   // Right
                 face = RIGHT;
                 break;

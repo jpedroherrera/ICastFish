@@ -9,8 +9,7 @@ has_specific_post_pickup = false;	// Runs default post-pickup.
 uid = pickup_make_uid(room, x, y, item_id);
 
 // If we already took this pickup earlier, delete self immediately.
-if (arr_contains(global.Collected, uid))
-{
+if (arr_contains(global.Collected, uid)) {
     // Only destroy if item is NOT supposed to persist
     if (!item_persistent) instance_destroy();
     exit;
@@ -18,8 +17,7 @@ if (arr_contains(global.Collected, uid))
 
 
 // This adds an item to inventory.
-function add_to_inventory()
-{
+function add_to_inventory() {
 	// Creates an item struct.
     var item = new Item(item_id, item_name, item_type, item_is_stackable, item_value, item_sprite);
 	item.quantity += 1;
@@ -29,13 +27,11 @@ function add_to_inventory()
     var added = false;
 
     // Loop through inventory
-    for (var i = 0; i < array_length(inv_items); i++)
-    {
+    for (var i = 0; i < array_length(inv_items); i++) {
         var inv_item = inv_items[i];
 
         // If item is same type and stackable
-        if (inv_item.stackable == true && item.stackable == true)
-        {
+        if (inv_item.stackable == true && item.stackable == true) {
             // Increase quantity/value instead of adding new entry
             inv_item.quantity += item.quantity;
             added = true;
@@ -44,8 +40,7 @@ function add_to_inventory()
     }
 
     // If not stacked, add as new entry
-    if (!added)
-    {
+    if (!added) {
         global.Inv.add_item(item);
     }
 
@@ -53,12 +48,10 @@ function add_to_inventory()
     global.Collected = arr_push(global.Collected, uid);
 
     // Decide if the instance should persist or be destroyed
-    if (item_persistent)
-    {
+    if (item_persistent) {
         persistent = true;  // survives room changes
     }
-    else
-    {
+    else {
         instance_destroy(); // normal pickups get destroyed
     }
 }

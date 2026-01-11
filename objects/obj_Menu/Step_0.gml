@@ -19,21 +19,18 @@ prev_confirm = confirm;
 option_length = array_length(menu[menu_level]);
 
 // Move through menu.
-if (up_pressed)
-{
+if (up_pressed) {
     position -= 1;
     if (position < 0) position = option_length - 1;
 }
 
-if (down_pressed)
-{
+if (down_pressed) {
     position += 1;
     if (position >= option_length) position = 0;
 }
 
 // Handle menu selection
-if (confirm_pressed && current_time - last_confirm_time >= confirm_cooldown)
-{
+if (confirm_pressed && current_time - last_confirm_time >= confirm_cooldown) {
     // Record confirm press time.
     last_confirm_time = current_time;
 

@@ -7,3 +7,17 @@ jump = keyboard_check(vk_space);
 
 // Run current state (free movement, ladder, or menu).
 state();
+
+// Invincibility
+if (invincibility) {
+    invincibility_timer -= 1;
+    if (invincibility_timer <= 0) {
+        invincibility = false;
+        invincibility_timer = 0;
+    }
+}
+
+// Health
+if (hp <= 0) {
+	game_end();
+}
