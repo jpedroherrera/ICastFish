@@ -74,7 +74,6 @@
     {"id":{"name":"obj_Camera","path":"objects/obj_Camera/obj_Camera.yy",},},
     {"id":{"name":"obj_Coin","path":"objects/obj_Coin/obj_Coin.yy",},},
     {"id":{"name":"obj_DashCharge","path":"objects/obj_DashCharge/obj_DashCharge.yy",},},
-    {"id":{"name":"obj_DoorTrigger","path":"objects/obj_DoorTrigger/obj_DoorTrigger.yy",},},
     {"id":{"name":"obj_DoorToBase","path":"objects/obj_DoorToBase/obj_DoorToBase.yy",},},
     {"id":{"name":"obj_DoorToHouseInterior","path":"objects/obj_DoorToHouseInterior/obj_DoorToHouseInterior.yy",},},
     {"id":{"name":"obj_DoorToTutorialDungeon","path":"objects/obj_DoorToTutorialDungeon/obj_DoorToTutorialDungeon.yy",},},
