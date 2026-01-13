@@ -105,7 +105,6 @@
     {"id":{"name":"rm_Base","path":"rooms/rm_Base/rm_Base.yy",},},
     {"id":{"name":"rm_HouseInterior","path":"rooms/rm_HouseInterior/rm_HouseInterior.yy",},},
     {"id":{"name":"rm_TitleScreen","path":"rooms/rm_TitleScreen/rm_TitleScreen.yy",},},
-    {"id":{"name":"rm_TutorialDungeon_1","path":"rooms/rm_TutorialDungeon_1/rm_TutorialDungeon_1.yy",},},
     {"id":{"name":"rm_TutorialDungeon","path":"rooms/rm_TutorialDungeon/rm_TutorialDungeon.yy",},},
     {"id":{"name":"DepthSorting","path":"scripts/DepthSorting/DepthSorting.yy",},},
     {"id":{"name":"macros","path":"scripts/macros/macros.yy",},},
@@ -178,7 +177,6 @@
     {"roomId":{"name":"rm_Base","path":"rooms/rm_Base/rm_Base.yy",},},
     {"roomId":{"name":"rm_HouseInterior","path":"rooms/rm_HouseInterior/rm_HouseInterior.yy",},},
     {"roomId":{"name":"rm_TutorialDungeon","path":"rooms/rm_TutorialDungeon/rm_TutorialDungeon.yy",},},
-    {"roomId":{"name":"rm_TutorialDungeon_1","path":"rooms/rm_TutorialDungeon_1/rm_TutorialDungeon_1.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
