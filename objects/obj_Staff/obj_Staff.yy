@@ -15,8 +15,8 @@
     "path":"folders/Objects/Items.yy",
   },
   "parentObjectId":{
-    "name":"par_Collectibles",
-    "path":"objects/par_Collectibles/par_Collectibles.yy",
+    "name":"par_Weapon",
+    "path":"objects/par_Weapon/par_Weapon.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

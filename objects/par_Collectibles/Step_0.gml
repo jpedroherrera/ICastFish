@@ -1,4 +1,4 @@
-if (!autopickup)
+if (!autopickup) // NOTE: Never runs for weapons.
 {
     // Distance check to player
     var item_position = instance_nearest(x, y, obj_Player);

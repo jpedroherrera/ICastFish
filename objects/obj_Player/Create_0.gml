@@ -1,3 +1,5 @@
+show_debug_log(true);
+
 // Player Attributes.
 hp = 100;
 max_hp = 100;
@@ -14,10 +16,10 @@ dodge_timer_max = 120;
 dodge_timer = dodge_timer_max;
 dodge_amount = 30;
 
-
 // Combat characteristics.
 invincibility = false;
 invincibility_timer = 0;
+has_weapon_equipped = false;
 
 // Inventory.
 menu_or_inventory = "";

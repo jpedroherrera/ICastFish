@@ -16,13 +16,28 @@ function Inventory() constructor {
         }
     }
 
-    has_item = function(_id) {
+	
+	// Looks for a specific item within the inventory by ID
+    has_item = function(item_id) {
         var item_array_length = array_length(items);
 	    for (var i = 0; i < item_array_length; i++) {
-	        var it = items[i];
+	        var inventory_item = items[i];
 
             // If it's a struct, check the .id field.
-			if (is_struct(it) && variable_struct_exists(it, "id") && it.id == _id) return true;
+			if (is_struct(inventory_item) && variable_struct_exists(inventory_item, "id") && inventory_item.id == item_id) return true;
+	    }
+	    return false;
+    };
+	
+	
+	// Checks if inventory has item of a type (e.g., weapon)
+	has_type = function(item_type) {
+        var item_array_length = array_length(items);
+	    for (var i = 0; i < item_array_length; i++) {
+	        var inventory_item = items[i];
+
+            // If it's a struct, check the type.
+			if (is_struct(inventory_item) && variable_struct_exists(inventory_item, "type") && inventory_item.type == item_type) return true;
 	    }
 	    return false;
     };
@@ -40,12 +55,27 @@ function Inventory() constructor {
 	function sanitize() {
         for (var i = array_length(items) - 1; i >= 0; i--) {
             var it = items[i];
-            if (!is_struct(it)) { array_delete(items, i, 1); continue; }
-            if (!variable_struct_exists(it, "id"))   { array_delete(items, i, 1); continue; }
-            if (!variable_struct_exists(it, "name")) { array_delete(items, i, 1); continue; }
-            if (!variable_struct_exists(it, "_sprite_index")) it._sprite_index = noone;
-            if (!variable_struct_exists(it, "type")) it.type = "misc";
-            if (!variable_struct_exists(it, "value")) it.value = 0;
+            if (!is_struct(it)) {
+				array_delete(items, i, 1);
+				continue;
+			}
+            if (!variable_struct_exists(it, "id")) {
+				array_delete(items, i, 1);
+				continue;
+			}
+            if (!variable_struct_exists(it, "name")) {
+				array_delete(items, i, 1);
+				continue;
+			}
+            if (!variable_struct_exists(it, "_sprite_index")) {
+				it._sprite_index = noone;
+			}
+            if (!variable_struct_exists(it, "type")) {
+				it.type = "misc";
+			}
+            if (!variable_struct_exists(it, "value")) {
+				it.value = 0;
+			}
         }
     }
 
@@ -62,3 +92,4 @@ function Inventory() constructor {
         return items; // returns a copy/reference.
     };
 }
+

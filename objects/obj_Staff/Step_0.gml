@@ -1,7 +1,7 @@
-		// Parent event.
+// Parent event.
 event_inherited();
 
-		// Child event.
+// Child event.
 if (state == "orbit") {
 	if (instance_exists(orbit_target)) {
 		// Calculate angle from player to mouse
