@@ -7,6 +7,16 @@ jump = keyboard_check(vk_space);
 dodge = keyboard_check(vk_shift);
 
 // Run current state (free movement, ladder, or menu).
+
+// Pause the character's animation and interactability.
+if global.paused == true
+{
+	image_speed = 0;
+	exit;	
+}
+else image_speed = 1;
+
+// Run the state machine everys step.
 state();
 
 // Invincibility

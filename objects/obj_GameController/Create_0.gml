@@ -13,3 +13,4 @@ window_set_cursor(cr_none);
 global.Inv = new Inventory();	// from scr_inventory.gml.
 global.Inv.sanitize();			// Ensures a clean inventory.
 global.Collected = [];          // Array of pickup UIDs.
+global.paused = false;			// Game is not paused on startup.

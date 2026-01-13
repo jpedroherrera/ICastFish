@@ -1,3 +1,5 @@
+
+
 if (!autopickup)
 {
     // Distance check to player
