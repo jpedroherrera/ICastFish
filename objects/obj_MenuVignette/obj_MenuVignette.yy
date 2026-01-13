@@ -1,17 +1,16 @@
 {
   "$GMObject":"",
-  "%Name":"obj_GameController",
+  "%Name":"obj_MenuVignette",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":2,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_GameController",
+  "name":"obj_MenuVignette",
   "overriddenProperties":[],
   "parent":{
-    "name":"General Game Objects",
-    "path":"folders/Objects/General Game Objects.yy",
+    "name":"Menu_Vignette",
+    "path":"folders/Objects/UI/Menu_Vignette.yy",
   },
   "parentObjectId":null,
   "persistent":true,
@@ -31,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_MenuVignette",
+    "path":"sprites/spr_MenuVignette/spr_MenuVignette.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

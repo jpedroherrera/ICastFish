@@ -25,6 +25,7 @@ has_weapon_equipped = false;
 menu_or_inventory = "";
 
 
+
 // This functions handles menu and inventory toggles.
 function check_menu_or_inventory_toggle() {
 	// Check for menu toggle.
@@ -43,7 +44,7 @@ function check_menu_or_inventory_toggle() {
 		menu_or_inventory = "inventory";
 		return; // Skip movement this frame.
     }
-}
+	}
 
 
 // This function checks for ladder interactability.

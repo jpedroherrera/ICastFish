@@ -1,3 +1,10 @@
+if global.paused == true
+{
+	image_speed = 0;
+	exit;	
+}
+else image_speed = 1;
+
 ember_timer += 1;
 
 if (ember_timer >= ember_interval) {

@@ -1,3 +1,8 @@
+if global.paused == true
+{
+	exit;	
+}
+
 // Movement.
 x += horizontal_movement;
 y += vertical_movement;
